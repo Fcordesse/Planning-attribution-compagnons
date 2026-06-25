@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attribution Chantiers</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fff; color: #222;
+            overflow: hidden; height: 100vh;
+            display: flex; flex-direction: column;
+        }
+        .main-tabs { display: flex; background: #333; flex-shrink: 0; z-index: 200; }
+        .main-tab {
+            padding: 10px 28px; cursor: pointer; font-size: 0.85rem; font-weight: 700;
+            border: none; background: #444; color: #aaa; border-right: 1px solid #555;
+            transition: all 0.15s; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .main-tab:hover { background: #555; color: #fff; }
+        .main-tab.active { background: #fff; color: #1565c0; }
+        .page { display: none; flex-direction: column; flex: 1; overflow: hidden; }
+        .page.active { display: flex; }
+        .header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 20px; background: #f5f5f5;
+            border-bottom: 2px solid #ddd; flex-shrink: 0; z-index: 100;
+        }
+        .header h1 { font-size: 1.2rem; color: #1565c0; letter-spacing: 0.5px; }
+        .chantier-ribbon {
+            display: flex; gap: 4px; padding: 6px 20px; flex-shrink: 0;
+            background: #fafafa; border-bottom: 1px solid #ddd;
+            flex-wrap: wrap; min-height: 42px; align-items: center; z-index: 98;
+        }
+        .ch-btn {
+            padding: 5px 10px; border: 2px solid transparent; border-radius: 5px;
+            cursor: pointer; font-weight: 600; font-size: 0.72rem;
+            transition: all 0.15s ease; user-select: none; white-space: nowrap;
+        }
+        .ch-btn[data-tool="Effacer"] { background: #ffebee; color: #c62828; border-color: #ef9a9a; margin-left: 10px; }
+        .ch-btn[data-tool="Effacer"]:hover, .ch-btn[data-tool="Effacer"].active { background: #c62828; color: #fff; border-color: #c62828; }
+        .active-bar {
+            padding: 5px 20px; background: #f9f9f9; font-size: 0.78rem;
+            flex-shrink: 0; display: flex; justify-content: space-between;
+            align-items: center; border-bottom: 1px solid #eee; color: #555;
+        }
+        .active-bar .current { font-weight: 700; color: #222; }
+        .active-bar .hint { color: #999; font-size: 0.72rem; }
+        .controls {
+            display: flex; gap: 8px; padding: 8px 20px; background: #f5f5f5;
+            border-bottom: 1px solid #ddd; flex-shrink: 0; align-items: center; flex-wrap: wrap;
+        }
+        .controls button {
+            padding: 6px 14px; border: 1px solid #ccc; border-radius: 5px;
+            background: #fff; color: #333; cursor: pointer; font-size: 0.78rem; transition: all 0.15s;
+        }
+        .controls button:hover { background: #e0e0e0; border-color: #999; }
+        .controls button.fill-mode {
+            border-color: #1565c0; color: #1565c0; font-weight: 700;
+        }
+        .controls button.fill-mode.active {
+            background: #1565c0; color: #fff; border-color: #1565c0;
+        }
+        .month-nav { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+        .month-nav .month-label { min-width: 130px; text-align: center; font-weight: 700; color: #1565c0; font-size: 0.85rem; }
+
+        .table-wrapper { flex: 1; overflow: auto; position: relative; background: #fff; }
+        table { border-collapse: separate; border-spacing: 0; min-width: 100%; }
+        thead th { position: sticky; z-index: 20; background: #f5f5f5; }
+        thead tr:nth-child(1) th { top: 0; z-index: 27; }
+        thead tr:nth-child(2) th { top: 28px; z-index: 26; }
+        thead tr:nth-child(3) th { top: 50px; z-index: 25; }
+
+        .month-header {
+            background: #e0e0e0 !important; color: #1565c0;
+            font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; padding: 5px 4px; text-align: center; border-right: 1px solid #ccc;
+        }
+        .month-header.month-border-r { border-right: 2.5px solid #999 !important; }
+        .week-header {
+            background: #e8eaf6 !important; color: #3949ab;
+            font-size: 0.6rem; font-weight: 700; padding: 3px 2px; text-align: center;
+            border-right: 1px solid #c5cae9;
+        }
+        .day-header {
+            background: #f5f5f5 !important; color: #666; font-size: 0.62rem;
+            padding: 2px 1px; text-align: center;
+            border-right: 1px solid #e0e0e0; border-bottom: 2px solid #ccc;
+            min-width: 46px; max-width: 46px; width: 46px;
+        }
+        .day-header.today { background: #1565c0 !important; color: #fff; font-weight: 900; }
+        .month-border-r { border-right: 2.5px solid #999 !important; }
+        .week-border-r  { border-right: 1.5px solid #bbb !important; }
+
+        /* Resizable column headers */
+        .col-header-resizable {
+            position: relative;
+            font-size: 0.6rem; font-weight: 700; color: #555; text-align: center;
+            border-bottom: 2px solid #ccc; padding: 3px 2px;
+            user-select: none; overflow: hidden;
+        }
+        .col-header-resizable .resize-handle {
+            position: absolute; top: 0; right: -2px; width: 5px; height: 100%;
+            cursor: col-resize; z-index: 40;
+        }
+        .col-header-resizable .resize-handle:hover { background: rgba(21,101,192,0.3); }
+
+        /* Sticky info columns */
+        .info-col {
+            position: sticky; z-index: 10; background: #fff;
+            border-bottom: 1px solid #e8e8e8; padding: 0;
+            overflow: hidden;
+        }
+        .info-col input {
+            width: 100%; padding: 7px 5px; background: transparent;
+            border: none; color: #222; font-size: 0.78rem; font-weight: 600; outline: none;
+        }
+        .info-col input::placeholder { color: #bbb; font-style: italic; font-weight: 400; }
+        .info-col input:focus { background: #e3f2fd; }
+        .info-col-last { border-right: 2px solid #ccc !important; }
+
+        .corner-span { position: sticky; left: 0; z-index: 30 !important; background: inherit !important; }
+
+        td.data-cell {
+            min-width: 46px; max-width: 46px; width: 46px; height: 34px;
+            text-align: center; border-right: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0; cursor: pointer;
+            user-select: none; padding: 0; position: relative; vertical-align: middle;
+            font-size: 0.5rem; font-weight: 700; transition: background 0.08s;
+        }
+        td.data-cell:hover { outline: 2px solid #1565c0; outline-offset: -2px; }
+        td.data-cell.today-col { box-shadow: inset 0 0 0 1px #1565c0; }
+
+        .table-wrapper::-webkit-scrollbar { width: 10px; height: 10px; }
+        .table-wrapper::-webkit-scrollbar-track { background: #f5f5f5; }
+        .table-wrapper::-webkit-scrollbar-thumb { background: #ccc; border-radius: 5px; }
+        .table-wrapper::-webkit-scrollbar-thumb:hover { background: #999; }
+
+        .flash-msg {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: #fff; border: 2px solid #c62828; border-radius: 10px;
+            padding: 16px 28px; font-size: 0.9rem; font-weight: 600;
+            color: #c62828; box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            z-index: 500; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+            text-align: center; max-width: 460px;
+        }
+        .flash-msg.show { opacity: 1; pointer-events: auto; }
+
+        .param-page { padding: 30px 40px; overflow-y: auto; flex: 1; }
+        .param-page h2 { font-size: 1.1rem; color: #1565c0; margin-bottom: 16px; border-bottom: 2px solid #eee; padding-bottom: 8px; }
+        .param-page p.info { font-size: 0.85rem; color: #666; margin-bottom: 20px; line-height: 1.5; }
+        .add-chantier-form {
+            display: flex; gap: 8px; margin-bottom: 24px; align-items: flex-end; flex-wrap: wrap;
+            padding: 16px; background: #f5f5f5; border-radius: 8px; border: 1px solid #ddd;
+        }
+        .add-chantier-form .field { display: flex; flex-direction: column; gap: 4px; }
+        .add-chantier-form label { font-size: 0.75rem; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.5px; }
+        .add-chantier-form input { padding: 8px 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 0.85rem; outline: none; }
+        .add-chantier-form input:focus { border-color: #1565c0; }
+        .add-chantier-form input[type="color"] { width: 44px; height: 36px; padding: 2px; cursor: pointer; border-radius: 5px; }
+        .add-chantier-form button { padding: 8px 20px; border-radius: 6px; border: none; background: #1565c0; color: #fff; cursor: pointer; font-size: 0.85rem; font-weight: 700; }
+        .add-chantier-form button:hover { background: #0d47a1; }
+        .chantier-list { display: flex; flex-wrap: wrap; gap: 8px; }
+        .chantier-card {
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 14px; border-radius: 6px; font-size: 0.82rem; font-weight: 600;
+            border: 2px solid transparent; user-select: none; transition: all 0.15s;
+        }
+        .chantier-card:hover { filter: brightness(1.1); transform: scale(1.02); }
+        .chantier-card .ch-delete {
+            width: 18px; height: 18px; display: flex; align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.2); color: #fff; border-radius: 50%;
+            cursor: pointer; font-size: 0.65rem; font-weight: 900; margin-left: 4px;
+        }
+        .chantier-card .ch-delete:hover { background: rgba(200,0,0,0.7); }
+        .param-actions { margin-top: 24px; display: flex; gap: 10px; padding-top: 16px; border-top: 1px solid #eee; }
+        .param-actions button { padding: 8px 20px; border-radius: 6px; border: 1px solid #ccc; background: #fff; color: #333; cursor: pointer; font-size: 0.82rem; font-weight: 600; }
+        .param-actions button:hover { background: #e0e0e0; }
+        .param-actions button.primary { background: #1565c0; color: #fff; border-color: #1565c0; }
+        .param-actions button.primary:hover { background: #0d47a1; }
+        .date-year-section { margin-bottom: 20px; }
+        .date-year-title { font-size: 1rem; font-weight: 800; color: #333; margin-bottom: 8px; padding: 4px 10px; background: #f0f0f0; border-radius: 5px; display: inline-block; }
+        .date-months-grid { display: flex; flex-wrap: wrap; gap: 6px; padding-left: 4px; }
+        .date-month-btn { padding: 5px 12px; border-radius: 5px; cursor: pointer; font-size: 0.75rem; font-weight: 700; border: 2px solid transparent; user-select: none; min-width: 45px; text-align: center; }
+        .date-month-btn.enabled { background: #1565c0; color: #fff; border-color: #1565c0; }
+        .date-month-btn.enabled:hover { filter: brightness(1.15); }
+        .date-month-btn.disabled { background: #eee; color: #aaa; border-color: #ddd; text-decoration: line-through; }
+        .param-sub-tabs { display: flex; gap: 0; margin-bottom: 24px; border-bottom: 2px solid #eee; }
+        .param-sub-tab { padding: 10px 24px; cursor: pointer; font-size: 0.85rem; font-weight: 700; border: none; background: transparent; color: #888; border-bottom: 3px solid transparent; }
+        .param-sub-tab:hover { color: #444; background: #f5f5f5; }
+        .param-sub-tab.active { color: #1565c0; border-bottom-color: #1565c0; }
+        .param-sub-content { display: none; }
+        .param-sub-content.active { display: block; }
+    </style>
+</head>
+<body>
+    <div class="main-tabs">
+        <button class="main-tab active" onclick="switchPage('attribution')">🏗 Attribution Chantiers</button>
+        <button class="main-tab" onclick="switchPage('parametrage')">⚙ Paramétrage Attribution</button>
+    </div>
+
+    <div class="page active" id="page-attribution">
+        <div class="header"><h1>🏗 Attribution Chantiers — Compagnons</h1></div>
+        <div class="chantier-ribbon" id="chantierRibbon"></div>
+        <div class="active-bar">
+            <span>Chantier actif : <span class="current" id="activeChantierLabel">Aucun</span></span>
+            <span class="hint">Clic = attribuer · Maintenir = peindre · Clic droit = effacer</span>
+        </div>
+        <div class="controls">
+            <button onclick="addCompagnon()">+ Compagnon</button>
+            <button onclick="removeLastCompagnon()">− Supprimer dernier</button>
+            <button onclick="sortCompagnons()">🔤 Trier A→Z</button>
+            <button class="fill-mode" id="fillBtn" onclick="toggleFillMode()">➡ Remplir jusqu'à nouvel ordre</button>
+            <button onclick="clearAllAttrib()">🗑 Tout effacer</button>
+            <button onclick="saveAsFileAttrib()">💾 Enregistrer sous</button>
+            <button onclick="loadFromFileAttrib()">📂 Ouvrir un fichier</button>
+            <div class="month-nav">
+                <button onclick="scrollToMonthA(-1)">◀</button>
+                <span class="month-label" id="monthLabelA"></span>
+                <button onclick="scrollToMonthA(1)">▶</button>
+                <button onclick="scrollToTodayA()" style="margin-left:8px;">📍 Aujourd'hui</button>
+            </div>
+        </div>
+        <div class="table-wrapper" id="tableWrapperA">
+            <table id="attribTable">
+                <thead id="attribHead"></thead>
+                <tbody id="attribBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="page" id="page-parametrage">
+        <div class="param-page">
+            <div class="param-sub-tabs">
+                <button class="param-sub-tab active" onclick="showParamSubA('chantiers')">Gestion des chantiers</button>
+                <button class="param-sub-tab" onclick="showParamSubA('dates')">Paramétrage des dates</button>
+            </div>
+            <div class="param-sub-content active" id="paramSubA-chantiers">
+                <h2>🏗 Gestion des chantiers</h2>
+                <p class="info">Ajoutez vos chantiers. Ils apparaîtront comme boutons dans l'onglet Attribution.</p>
+                <div class="add-chantier-form">
+                    <div class="field"><label>Nom complet</label><input type="text" id="newChName" placeholder="Ex: OPEN SOURCE" style="width:220px;"></div>
+                    <div class="field"><label>Abréviation</label><input type="text" id="newChAbbr" placeholder="Ex: OPEN" style="width:120px;" maxlength="8"></div>
+                    <div class="field"><label>Couleur</label><input type="color" id="newChColor" value="#1565c0"></div>
+                    <button onclick="addChantier()">+ Ajouter</button>
+                </div>
+                <h2 style="font-size:0.95rem;margin-top:8px;">Chantiers existants</h2>
+                <div class="chantier-list" id="chantierList"></div>
+            </div>
+            <div class="param-sub-content" id="paramSubA-dates">
+                <h2>📅 Paramétrage des dates</h2>
+                <p class="info">Activez/désactivez des mois. Un mois avec des attributions ne peut pas être désactivé.</p>
+                <div id="paramDatesContentA"></div>
+                <div class="param-actions">
+                    <button onclick="enableAllMonthsA()">✅ Tout activer</button>
+                    <button onclick="disableAllMonthsA()">🚫 Tout désactiver</button>
+                </div>
+            </div>
+            <div class="param-actions" style="margin-top:30px;">
+                <button class="primary" onclick="switchPage('attribution')">← Retour</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="flash-msg" id="flashMsg"></div>
+    <input type="file" id="fileInputA" accept=".json" style="display:none;">
+
+    <script>
+        function toLocalDateStr(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+        function getWeekNumber(d){const t=new Date(d.getFullYear(),d.getMonth(),d.getDate());t.setDate(t.getDate()+3-(t.getDay()+6)%7);const w1=new Date(t.getFullYear(),0,4);return 1+Math.round(((t-w1)/86400000-3+(w1.getDay()+6)%7)/7);}
+        const DAYS_FR=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+        const MONTHS_FR=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+        const MONTHS_SHORT=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
+        const GLOBAL_START_YEAR=2026,GLOBAL_END_YEAR=2030;
+
+        let flashTimeout=null;
+        function flash(t){const m=document.getElementById('flashMsg');m.textContent=t;m.classList.add('show');clearTimeout(flashTimeout);flashTimeout=setTimeout(()=>m.classList.remove('show'),2500);}
+        function contrastFg(hex){const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return(r*.299+g*.587+b*.114)>150?'#222':'#fff';}
+        function capitalizeFirst(s){if(!s)return'';return s.charAt(0).toUpperCase()+s.slice(1).toLowerCase();}
+
+        // === STATE ===
+        let chantiers=[];
+        let enabledMonthsA={};
+        let compagnons=[];
+        let attribData={};
+        let activeChantier=null;
+        let isPainting=false;
+        let fillMode=false;
+        let compIdCounter=0;
+        let workingDays=[],monthBoundaries=[],weekBoundaries=[];
+        let currentMonthIndexA=0;
+
+        // Column widths (resizable)
+        let colWidths={nom:120,prenom:100,id:60,entite:70};
+
+        function getTotalInfoWidth(){return colWidths.nom+colWidths.prenom+colWidths.id+colWidths.entite;}
+
+        function initMonthsA(){for(let y=GLOBAL_START_YEAR;y<=GLOBAL_END_YEAR;y++){for(let m=0;m<12;m++){const key=y+'-'+String(m+1).padStart(2,'0');const d=new Date(y,m,1);const def=(d>=new Date(2026,5,1)&&d<=new Date(2027,4,1));if(!(key in enabledMonthsA))enabledMonthsA[key]=def;}}}
+        function monthKey(y,m){return y+'-'+String(m+1).padStart(2,'0');}
+        function isMonthEnabledA(y,m){return enabledMonthsA[monthKey(y,m)]===true;}
+        function isMonthHasAttribData(y,m){for(const[k,v]of Object.entries(attribData)){if(!v)continue;const ds=k.split('_')[1];if(!ds)continue;const p=ds.split('-');if(parseInt(p[0])===y&&parseInt(p[1])-1===m)return true;}return false;}
+        function isChantierUsed(chId){return Object.values(attribData).some(v=>v===chId);}
+
+        function generateWorkingDaysA(){
+            workingDays=[];monthBoundaries=[];weekBoundaries=[];
+            let lastMonth=-1,lastWeek=-1;
+            for(let y=GLOBAL_START_YEAR;y<=GLOBAL_END_YEAR;y++){for(let m=0;m<12;m++){
+                if(!isMonthEnabledA(y,m))continue;
+                let d=new Date(y,m,1);
+                while(d.getMonth()===m){const dow=d.getDay();if(dow!==0&&dow!==6){const wn=getWeekNumber(d);const entry={date:new Date(d),day:d.getDate(),dow,month:d.getMonth(),year:d.getFullYear(),key:toLocalDateStr(d),week:wn};const idx=workingDays.length;workingDays.push(entry);const mKey=y*100+m;if(mKey!==lastMonth){monthBoundaries.push({month:m,year:y,startIndex:idx,count:0});lastMonth=mKey;}monthBoundaries[monthBoundaries.length-1].count++;if(wn!==lastWeek){weekBoundaries.push({week:wn,startIndex:idx,count:0});lastWeek=wn;}weekBoundaries[weekBoundaries.length-1].count++;}d.setDate(d.getDate()+1);}
+            }}
+        }
+
+        function isLastDayOfMonthA(idx){if(idx>=workingDays.length-1)return true;return workingDays[idx].month!==workingDays[idx+1].month||workingDays[idx].year!==workingDays[idx+1].year;}
+        function isLastDayOfWeekA(idx){if(idx>=workingDays.length-1)return true;return workingDays[idx].week!==workingDays[idx+1].week;}
+
+        // === COMPAGNONS ===
+        function addCompagnon(){compIdCounter++;compagnons.push({id:compIdCounter,nom:'',prenom:'',matricule:'',entite:'ECE'});rebuildAttribTable();}
+        function removeLastCompagnon(){if(!compagnons.length)return;const last=compagnons.pop();for(const k of Object.keys(attribData)){if(k.startsWith(last.id+'_'))delete attribData[k];}rebuildAttribTable();}
+        function sortCompagnons(){compagnons.sort((a,b)=>{const na=(a.nom||'').toUpperCase(),nb=(b.nom||'').toUpperCase();if(na<nb)return-1;if(na>nb)return 1;const pa=(a.prenom||'').toUpperCase(),pb=(b.prenom||'').toUpperCase();if(pa<pb)return-1;if(pa>pb)return 1;return 0;});rebuildAttribTable();}
+
+        // === FILL MODE ===
+        function toggleFillMode(){fillMode=!fillMode;document.getElementById('fillBtn').classList.toggle('active',fillMode);}
+
+        // === BUILD TABLE ===
+        function buildHeaderA(){
+            const thead=document.getElementById('attribHead');thead.innerHTML='';
+            const todayKey=toLocalDateStr(new Date());
+            const totalInfoW=getTotalInfoWidth();
+
+            // Row 1: Months
+            const mR=document.createElement('tr');
+            const cM=document.createElement('th');cM.className='corner-span month-header';cM.colSpan=4;cM.style.minWidth=totalInfoW+'px';cM.textContent='';mR.appendChild(cM);
+            monthBoundaries.forEach(mb=>{const th=document.createElement('th');th.className='month-header month-border-r';th.colSpan=mb.count;th.textContent=MONTHS_FR[mb.month]+' '+mb.year;mR.appendChild(th);});
+            thead.appendChild(mR);
+
+            // Row 2: Weeks
+            const wR=document.createElement('tr');
+            const cW=document.createElement('th');cW.className='corner-span week-header';cW.colSpan=4;cW.style.minWidth=totalInfoW+'px';cW.textContent='';wR.appendChild(cW);
+            weekBoundaries.forEach(wb=>{const th=document.createElement('th');th.className='week-header';th.colSpan=wb.count;th.textContent='S'+wb.week;const li=wb.startIndex+wb.count-1;if(isLastDayOfMonthA(li))th.classList.add('month-border-r');else th.classList.add('week-border-r');wR.appendChild(th);});
+            thead.appendChild(wR);
+
+            // Row 3: Column headers + Days
+            const dR=document.createElement('tr');
+            const infoCols=[
+                {key:'nom',label:'NOM',left:0},
+                {key:'prenom',label:'Prénom',left:colWidths.nom},
+                {key:'id',label:'ID',left:colWidths.nom+colWidths.prenom},
+                {key:'entite',label:'Entité',left:colWidths.nom+colWidths.prenom+colWidths.id}
+            ];
+            infoCols.forEach((col,ci)=>{
+                const th=document.createElement('th');
+                th.className='col-header-resizable';
+                th.style.position='sticky';th.style.left=col.left+'px';th.style.zIndex='31';
+                th.style.width=colWidths[col.key]+'px';th.style.minWidth=colWidths[col.key]+'px';th.style.maxWidth=colWidths[col.key]+'px';
+                th.style.background='#f5f5f5';
+                if(ci===infoCols.length-1)th.style.borderRight='2px solid #ccc';
+                else th.style.borderRight='1px solid #e0e0e0';
+                th.textContent=col.label;
+
+                // Resize handle
+                const handle=document.createElement('div');handle.className='resize-handle';
+                let startX,startW;
+                handle.addEventListener('mousedown',(e)=>{
+                    e.preventDefault();e.stopPropagation();
+                    startX=e.clientX;startW=colWidths[col.key];
+                    const onMove=(ev)=>{
+                        const diff=ev.clientX-startX;
+                        colWidths[col.key]=Math.max(30,startW+diff);
+                        rebuildAttribTable();
+                    };
+                    const onUp=()=>{document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);};
+                    document.addEventListener('mousemove',onMove);
+                    document.addEventListener('mouseup',onUp);
+                });
+                th.appendChild(handle);
+                dR.appendChild(th);
+            });
+
+            workingDays.forEach((wd,idx)=>{
+                const th=document.createElement('th');th.className='day-header';
+                if(wd.key===todayKey)th.classList.add('today');
+                if(isLastDayOfMonthA(idx))th.classList.add('month-border-r');
+                else if(isLastDayOfWeekA(idx))th.classList.add('week-border-r');
+                th.textContent=DAYS_FR[wd.dow].charAt(0)+wd.day;
+                th.title=DAYS_FR[wd.dow]+' '+wd.day+' '+MONTHS_FR[wd.month]+' '+wd.year;
+                dR.appendChild(th);
+            });
+            thead.appendChild(dR);
+        }
+
+        function rebuildAttribTable(){
+            generateWorkingDaysA();buildHeaderA();
+            const tbody=document.getElementById('attribBody');tbody.innerHTML='';
+            const todayKey=toLocalDateStr(new Date());
+            const infoCols=[
+                {key:'nom',field:'nom',left:0,placeholder:'NOM',transform:'upper',last:false},
+                {key:'prenom',field:'prenom',left:colWidths.nom,placeholder:'Prénom',transform:'capitalize',last:false},
+                {key:'id',field:'matricule',left:colWidths.nom+colWidths.prenom,placeholder:'ID',transform:null,last:false},
+                {key:'entite',field:'entite',left:colWidths.nom+colWidths.prenom+colWidths.id,placeholder:'Entité',transform:null,last:true}
+            ];
+
+            compagnons.forEach(comp=>{
+                const tr=document.createElement('tr');
+
+                infoCols.forEach(col=>{
+                    const td=document.createElement('td');
+                    td.className='info-col'+(col.last?' info-col-last':'');
+                    td.style.position='sticky';td.style.left=col.left+'px';
+                    td.style.width=colWidths[col.key]+'px';td.style.minWidth=colWidths[col.key]+'px';td.style.maxWidth=colWidths[col.key]+'px';
+                    if(!col.last)td.style.borderRight='1px solid #e0e0e0';
+
+                    const inp=document.createElement('input');inp.type='text';
+                    inp.value=comp[col.field]||'';inp.placeholder=col.placeholder;
+                    if(col.transform==='upper')inp.style.textTransform='uppercase';
+
+                    inp.addEventListener('input',()=>{
+                        let val=inp.value;
+                        if(col.transform==='capitalize'){
+                            val=capitalizeFirst(val);
+                            inp.value=val;
+                        }
+                        comp[col.field]=val;
+                    });
+                    inp.addEventListener('blur',()=>{
+                        if(col.transform==='upper')comp[col.field]=inp.value.toUpperCase();
+                        if(col.transform==='capitalize'){inp.value=capitalizeFirst(inp.value);comp[col.field]=inp.value;}
+                    });
+                    td.appendChild(inp);tr.appendChild(td);
+                });
+
+                workingDays.forEach((wd,colIdx)=>{
+                    const td=document.createElement('td');td.className='data-cell';
+                    if(wd.key===todayKey)td.classList.add('today-col');
+                    td.setAttribute('data-comp',comp.id);td.setAttribute('data-date',wd.key);td.setAttribute('data-col',colIdx);
+
+                    const chId=attribData[comp.id+'_'+wd.key];
+                    if(chId){const ch=chantiers.find(c=>c.id===chId);if(ch){td.textContent=ch.abbr;td.style.background=ch.color;td.style.color=contrastFg(ch.color);td.title=ch.name;}}
+
+                    if(isLastDayOfMonthA(colIdx))td.classList.add('month-border-r');
+                    else if(isLastDayOfWeekA(colIdx))td.classList.add('week-border-r');
+
+                    td.addEventListener('mousedown',(e)=>{
+                        e.preventDefault();
+                        if(e.button===2){clearFrom(comp.id,wd.key,e);return;}
+                        if(!activeChantier){flash('⚠ Sélectionnez d\'abord un chantier');return;}
+                        if(fillMode&&activeChantier!=='__ERASE__'){
+                            fillFromDate(comp.id,colIdx);
+                        }else{
+                            isPainting=true;
+                            applyChantier(td,comp.id,wd.key);
+                        }
+                    });
+                    td.addEventListener('mouseenter',()=>{if(!isPainting||!activeChantier||fillMode)return;applyChantier(td,comp.id,wd.key);});
+                    td.addEventListener('contextmenu',(e)=>{e.preventDefault();attribData[comp.id+'_'+wd.key]=null;renderCell(td,comp.id,wd.key);});
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+
+            if(monthBoundaries.length){
+                if(currentMonthIndexA>=monthBoundaries.length)currentMonthIndexA=0;
+                document.getElementById('monthLabelA').textContent=MONTHS_FR[monthBoundaries[currentMonthIndexA].month]+' '+monthBoundaries[currentMonthIndexA].year;
+            }
+        }
+
+        function fillFromDate(compId,startColIdx){
+            const chId=activeChantier;
+            for(let i=startColIdx;i<workingDays.length;i++){
+                attribData[compId+'_'+workingDays[i].key]=chId;
+            }
+            // Re-render all cells for this compagnon
+            document.querySelectorAll(`td.data-cell[data-comp="${compId}"]`).forEach(td=>{
+                renderCell(td,compId,td.getAttribute('data-date'));
+            });
+        }
+
+        function clearFrom(compId,dateKey,e){
+            attribData[compId+'_'+dateKey]=null;
+            const td=e.target.closest('td.data-cell');
+            if(td)renderCell(td,compId,dateKey);
+        }
+
+        function applyChantier(td,compId,dateKey){
+            attribData[compId+'_'+dateKey]=activeChantier==='__ERASE__'?null:activeChantier;
+            renderCell(td,compId,dateKey);
+        }
+
+        function renderCell(td,compId,dateKey){
+            const chId=attribData[compId+'_'+dateKey];
+            if(chId){const ch=chantiers.find(c=>c.id===chId);if(ch){td.textContent=ch.abbr;td.style.background=ch.color;td.style.color=contrastFg(ch.color);td.title=ch.name;return;}}
+            td.textContent='';td.style.background='';td.style.color='';td.title='';
+        }
+
+        document.addEventListener('mouseup',()=>{isPainting=false;});
+
+        // === RIBBON ===
+        function renderChantierRibbon(){
+            const ribbon=document.getElementById('chantierRibbon');ribbon.innerHTML='';
+            if(!chantiers.length){const e=document.createElement('span');e.style.cssText='color:#999;font-size:0.8rem;font-style:italic;padding:4px 8px;';e.textContent='Aucun chantier — allez dans Paramétrage';ribbon.appendChild(e);}
+            else{chantiers.forEach(ch=>{
+                const btn=document.createElement('button');btn.className='ch-btn';btn.textContent=ch.abbr;btn.title=ch.name;
+                btn.style.background=ch.color;btn.style.color=contrastFg(ch.color);btn.style.borderColor=ch.color;
+                if(activeChantier===ch.id){btn.style.outline='3px solid #222';btn.style.outlineOffset='1px';}
+                btn.addEventListener('click',()=>{activeChantier=activeChantier===ch.id?null:ch.id;document.getElementById('activeChantierLabel').textContent=activeChantier?ch.name+' ('+ch.abbr+')':'Aucun';renderChantierRibbon();});
+                ribbon.appendChild(btn);
+            });}
+            const eraser=document.createElement('button');eraser.className='ch-btn';eraser.setAttribute('data-tool','Effacer');eraser.textContent='✕ Effacer';
+            if(activeChantier==='__ERASE__')eraser.classList.add('active');
+            eraser.addEventListener('click',()=>{activeChantier=activeChantier==='__ERASE__'?null:'__ERASE__';document.getElementById('activeChantierLabel').textContent=activeChantier==='__ERASE__'?'Gomme':'Aucun';renderChantierRibbon();});
+            ribbon.appendChild(eraser);
+        }
+
+        // === PARAM CHANTIERS ===
+        function addChantier(){
+            const nameEl=document.getElementById('newChName'),abbrEl=document.getElementById('newChAbbr'),colorEl=document.getElementById('newChColor');
+            const name=nameEl.value.trim(),abbr=abbrEl.value.trim().toUpperCase(),color=colorEl.value;
+            if(!name){flash('⚠ Nom requis');return;}if(!abbr){flash('⚠ Abréviation requise');return;}
+            if(chantiers.some(c=>c.abbr===abbr)){flash('⚠ Abréviation déjà existante');return;}
+            chantiers.push({id:'ch_'+Date.now()+'_'+Math.random().toString(36).substr(2,4),name,abbr,color});
+            nameEl.value='';abbrEl.value='';colorEl.value=randomColor();
+            saveChantiers();renderChantierList();renderChantierRibbon();
+        }
+        function removeChantier(id){if(isChantierUsed(id)){flash('⚠ Impossible : chantier attribué');return;}chantiers=chantiers.filter(c=>c.id!==id);if(activeChantier===id)activeChantier=null;saveChantiers();renderChantierList();renderChantierRibbon();}
+        function renderChantierList(){
+            const el=document.getElementById('chantierList');el.innerHTML='';
+            if(!chantiers.length){el.innerHTML='<span style="color:#999;font-style:italic;">Aucun chantier</span>';return;}
+            chantiers.forEach(ch=>{
+                const card=document.createElement('div');card.className='chantier-card';
+                card.style.background=ch.color;card.style.color=contrastFg(ch.color);card.style.borderColor=ch.color;
+                card.innerHTML='<span>'+ch.name+'</span><span style="font-size:0.7rem;opacity:0.8;">('+ch.abbr+')</span>';
+                const del=document.createElement('span');del.className='ch-delete';del.textContent='✕';
+                del.addEventListener('click',(e)=>{e.stopPropagation();removeChantier(ch.id);});
+                card.appendChild(del);el.appendChild(card);
+            });
+        }
+        function randomColor(){return['#1565c0','#2e7d32','#c62828','#ef6c00','#6a1b9a','#00838f','#ad1457','#4e342e','#37474f','#ff6f00','#1b5e20','#4a148c','#880e4f','#bf360c','#01579b','#33691e'][Math.floor(Math.random()*16)];}
+        function saveChantiers(){localStorage.setItem('attrib_chantiers',JSON.stringify(chantiers));}
+        function loadChantiers(){const r=localStorage.getItem('attrib_chantiers');if(r){try{chantiers=JSON.parse(r);}catch(e){}}}
+        function saveMonthsA(){localStorage.setItem('attrib_months',JSON.stringify(enabledMonthsA));}
+        function loadMonthsA(){const r=localStorage.getItem('attrib_months');if(r){try{const s=JSON.parse(r);for(const[k,v]of Object.entries(s))enabledMonthsA[k]=v;}catch(e){}}}
+
+        // === PARAM DATES ===
+        function renderParamDatesA(){
+            const c=document.getElementById('paramDatesContentA');c.innerHTML='';
+            for(let y=GLOBAL_START_YEAR;y<=GLOBAL_END_YEAR;y++){
+                const sec=document.createElement('div');sec.className='date-year-section';
+                const title=document.createElement('div');title.className='date-year-title';title.textContent=y;sec.appendChild(title);
+                const grid=document.createElement('div');grid.className='date-months-grid';
+                for(let m=0;m<12;m++){const key=monthKey(y,m);const btn=document.createElement('div');btn.className='date-month-btn';btn.textContent=MONTHS_SHORT[m];btn.classList.add(enabledMonthsA[key]?'enabled':'disabled');btn.addEventListener('click',()=>{if(enabledMonthsA[key]){if(isMonthHasAttribData(y,m)){flash('⚠ Impossible : des attributions existent sur '+MONTHS_FR[m]+' '+y);return;}enabledMonthsA[key]=false;}else{enabledMonthsA[key]=true;}saveMonthsA();renderParamDatesA();});grid.appendChild(btn);}
+                sec.appendChild(grid);c.appendChild(sec);
+            }
+        }
+        function enableAllMonthsA(){for(const k of Object.keys(enabledMonthsA))enabledMonthsA[k]=true;saveMonthsA();renderParamDatesA();}
+        function disableAllMonthsA(){let bl=[];for(let y=GLOBAL_START_YEAR;y<=GLOBAL_END_YEAR;y++){for(let m=0;m<12;m++){const key=monthKey(y,m);if(!enabledMonthsA[key])continue;if(isMonthHasAttribData(y,m)){bl.push(MONTHS_SHORT[m]+' '+y);continue;}enabledMonthsA[key]=false;}}saveMonthsA();renderParamDatesA();if(bl.length)flash('⚠ Non désactivés : '+bl.join(', '));}
+
+        // === PAGES ===
+        function switchPage(name){
+            document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+            document.querySelectorAll('.main-tab').forEach(t=>t.classList.remove('active'));
+            document.getElementById('page-'+name).classList.add('active');
+            document.querySelector(`.main-tab[onclick*="${name}"]`).classList.add('active');
+            if(name==='attribution'){rebuildAttribTable();renderChantierRibbon();}
+            if(name==='parametrage'){renderChantierList();renderParamDatesA();}
+        }
+        function showParamSubA(sub){
+            document.querySelectorAll('.param-sub-tab').forEach(t=>t.classList.remove('active'));
+            document.querySelectorAll('.param-sub-content').forEach(c=>c.classList.remove('active'));
+            document.querySelector(`.param-sub-tab[onclick*="${sub}"]`).classList.add('active');
+            document.getElementById('paramSubA-'+sub).classList.add('active');
+            if(sub==='chantiers')renderChantierList();if(sub==='dates')renderParamDatesA();
+        }
+
+        function clearAllAttrib(){if(!confirm('Effacer toutes les attributions ?'))return;attribData={};rebuildAttribTable();}
+
+        function saveAsFileAttrib(){
+            const data={chantiers,enabledMonths:enabledMonthsA,compagnons,attribData,compIdCounter,colWidths,version:'attrib_v3'};
+            const json=JSON.stringify(data,null,2);const blob=new Blob([json],{type:'application/json'});
+            const now=new Date();const link=document.createElement('a');link.href=URL.createObjectURL(blob);
+            link.download='attribution_'+now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+'_'+String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0')+'.json';
+            document.body.appendChild(link);link.click();document.body.removeChild(link);URL.revokeObjectURL(link.href);
+        }
+        function loadFromFileAttrib(){document.getElementById('fileInputA').click();}
+        document.getElementById('fileInputA').addEventListener('change',function(e){
+            const file=e.target.files[0];if(!file)return;
+            const reader=new FileReader();
+            reader.onload=function(ev){
+                try{
+                    const data=JSON.parse(ev.target.result);
+                    if(data.chantiers)chantiers=data.chantiers;
+                    if(data.enabledMonths){enabledMonthsA=data.enabledMonths;saveMonthsA();}
+                    if(data.compagnons)compagnons=data.compagnons;
+                    if(data.attribData)attribData=data.attribData;
+                    if(data.compIdCounter)compIdCounter=data.compIdCounter;
+                    if(data.colWidths)colWidths=data.colWidths;
+                    saveChantiers();rebuildAttribTable();renderChantierRibbon();flash('✅ Fichier chargé !');
+                }catch(err){flash('⚠ Erreur : '+err.message);}
+            };
+            reader.readAsText(file);e.target.value='';
+        });
+
+        function scrollToMonthA(dir){currentMonthIndexA=Math.max(0,Math.min(monthBoundaries.length-1,currentMonthIndexA+dir));const mb=monthBoundaries[currentMonthIndexA];if(!mb)return;document.getElementById('monthLabelA').textContent=MONTHS_FR[mb.month]+' '+mb.year;const wrapper=document.getElementById('tableWrapperA');const target=wrapper.querySelector(`td.data-cell[data-date="${workingDays[mb.startIndex].key}"]`);if(target)wrapper.scrollLeft=target.offsetLeft-getTotalInfoWidth()-20;}
+        function scrollToTodayA(){const todayKey=toLocalDateStr(new Date());const wrapper=document.getElementById('tableWrapperA');const target=wrapper.querySelector(`td.data-cell[data-date="${todayKey}"]`);if(target){wrapper.scrollLeft=target.offsetLeft-getTotalInfoWidth()-100;const today=new Date();monthBoundaries.forEach((mb,idx)=>{if(mb.month===today.getMonth()&&mb.year===today.getFullYear()){currentMonthIndexA=idx;document.getElementById('monthLabelA').textContent=MONTHS_FR[mb.month]+' '+mb.year;}});}else{flash("⚠ Aujourd'hui n'est pas un jour ouvré.");}}
+
+        function init(){
+            initMonthsA();loadMonthsA();loadChantiers();
+            if(!compagnons.length){for(let i=0;i<5;i++){compIdCounter++;compagnons.push({id:compIdCounter,nom:'',prenom:'',matricule:'',entite:'ECE'});}}
+            document.getElementById('newChColor').value=randomColor();
+            generateWorkingDaysA();rebuildAttribTable();renderChantierRibbon();
+            const now=new Date();monthBoundaries.forEach((mb,idx)=>{if(mb.month===now.getMonth()&&mb.year===now.getFullYear())currentMonthIndexA=idx;});
+            if(monthBoundaries.length){if(currentMonthIndexA>=monthBoundaries.length)currentMonthIndexA=0;document.getElementById('monthLabelA').textContent=MONTHS_FR[monthBoundaries[currentMonthIndexA].month]+' '+monthBoundaries[currentMonthIndexA].year;}
+            setTimeout(scrollToTodayA,300);
+        }
+        init();
+    </script>
+</body>
+</html>
