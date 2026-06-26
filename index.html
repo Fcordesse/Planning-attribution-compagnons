@@ -34,17 +34,12 @@
             box-shadow: 0 2px 12px rgba(0,0,0,0.06);
             transition: all 0.2s ease; padding: 24px 16px; text-align: center;
         }
-        .home-card:hover {
-            transform: translateY(-4px); box-shadow: 0 8px 28px rgba(198,40,40,0.13);
-            border-color: #c62828;
-        }
+        .home-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(198,40,40,0.13); border-color: #c62828; }
         .home-card .card-icon { font-size: 2.5rem; margin-bottom: 10px; }
         .home-card .card-name { font-size: 1.05rem; font-weight: 700; color: #222; }
         .home-card .card-date { font-size: 0.72rem; color: #999; margin-top: 6px; }
         .home-card.add-new { border: 2.5px dashed #bbb; background: #fafafa; color: #999; }
         .home-card.add-new:hover { border-color: #c62828; color: #c62828; }
-        .home-card.add-new .card-icon { font-size: 2.2rem; }
-        .home-card.add-new .card-name { font-weight: 600; }
         .home-card .card-delete {
             margin-top: 10px; font-size: 0.7rem; color: #c62828;
             cursor: pointer; opacity: 0; transition: opacity 0.15s;
@@ -64,7 +59,7 @@
         }
         .modal-box h2 { font-size: 1.15rem; color: #c62828; margin-bottom: 20px; }
         .modal-box .field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 16px; }
-        .modal-box label { font-size: 0.78rem; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.5px; }
+        .modal-box label { font-size: 0.78rem; font-weight: 700; color: #555; text-transform: uppercase; }
         .modal-box input { padding: 10px 14px; border: 1.5px solid #ccc; border-radius: 7px; font-size: 0.92rem; outline: none; }
         .modal-box input:focus { border-color: #c62828; }
         .modal-box .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
@@ -261,9 +256,8 @@
         .slots-container { display: flex; flex-direction: column; height: 100%; width: 100%; }
         .cell-slot {
             flex: 1; display: flex; align-items: center; justify-content: center;
-            font-size: 0.48rem; font-weight: 700;
-            letter-spacing: 0.1px; cursor: pointer; transition: filter 0.08s;
-            min-height: 0; overflow: hidden;
+            font-size: 0.48rem; font-weight: 700; letter-spacing: 0.1px;
+            cursor: pointer; transition: filter 0.08s; min-height: 0; overflow: hidden;
         }
         .cell-slot:hover { filter: brightness(1.1); }
         .cell-slot.empty { background: #fff; color: #ccc; }
@@ -273,8 +267,7 @@
         .footer-cell {
             position: sticky; left: 0; z-index: 10;
             background: #f5f5f5 !important; border-right: 2px solid #ccc;
-            border-top: 2px solid #999; font-size: 0.75rem; font-weight: 700; color: #444;
-            padding: 4px 8px;
+            border-top: 2px solid #999; font-size: 0.75rem; font-weight: 700; color: #444; padding: 4px 8px;
         }
         td.footer-hour {
             background: #f9f9f9; text-align: center; vertical-align: middle;
@@ -290,15 +283,13 @@
         }
         td.footer-validate, td.footer-edit {
             background: #fafafa; text-align: center; vertical-align: middle;
-            font-size: 0.6rem; font-weight: 600;
-            padding: 3px 0; border-bottom: 1px solid #e0e0e0;
-            border-right: 1px solid #e0e0e0;
+            font-size: 0.6rem; font-weight: 600; padding: 3px 0;
+            border-bottom: 1px solid #e0e0e0; border-right: 1px solid #e0e0e0;
         }
         td.footer-validate-label, td.footer-edit-label {
             position: sticky; left: 0; z-index: 10;
             background: #fafafa !important; border-right: 2px solid #ccc;
-            font-size: 0.7rem; font-weight: 600; color: #666;
-            padding: 4px 8px;
+            font-size: 0.7rem; font-weight: 600; color: #666; padding: 4px 8px;
         }
         .v-circle {
             width: 24px; height: 24px; border-radius: 50%;
@@ -364,35 +355,26 @@
         }
         .param-tool.enabled:hover { filter: brightness(1.1); transform: scale(1.03); }
         .param-tool.disabled { background: #eee !important; color: #aaa !important; border-color: #ddd !important; text-decoration: line-through; }
-        .param-tool.disabled:hover { background: #e0e0e0 !important; color: #888 !important; }
         .param-actions {
             margin-top: 24px; display: flex; gap: 10px;
             padding-top: 16px; border-top: 1px solid #eee;
         }
         .param-actions button {
             padding: 8px 20px; border-radius: 6px; border: 1px solid #ccc;
-            background: #fff; color: #333; cursor: pointer; font-size: 0.82rem;
-            font-weight: 600; transition: all 0.15s;
+            background: #fff; color: #333; cursor: pointer; font-size: 0.82rem; font-weight: 600;
         }
         .param-actions button:hover { background: #e0e0e0; }
         .param-actions button.primary { background: #c62828; color: #fff; border-color: #c62828; }
         .param-actions button.primary:hover { background: #a01e1e; }
         .date-year-section { margin-bottom: 20px; }
-        .date-year-title {
-            font-size: 1rem; font-weight: 800; color: #333; margin-bottom: 8px;
-            padding: 4px 10px; background: #f0f0f0; border-radius: 5px; display: inline-block;
-        }
+        .date-year-title { font-size: 1rem; font-weight: 800; color: #333; margin-bottom: 8px; padding: 4px 10px; background: #f0f0f0; border-radius: 5px; display: inline-block; }
         .date-months-grid { display: flex; flex-wrap: wrap; gap: 6px; padding-left: 4px; }
         .date-month-btn {
             padding: 5px 12px; border-radius: 5px; cursor: pointer;
-            font-size: 0.75rem; font-weight: 700; transition: all 0.15s;
-            border: 2px solid transparent; user-select: none;
-            min-width: 45px; text-align: center;
+            font-size: 0.75rem; font-weight: 700; border: 2px solid transparent; user-select: none; min-width: 45px; text-align: center;
         }
         .date-month-btn.enabled { background: #1565c0; color: #fff; border-color: #1565c0; }
-        .date-month-btn.enabled:hover { filter: brightness(1.15); transform: scale(1.05); }
         .date-month-btn.disabled { background: #eee; color: #aaa; border-color: #ddd; text-decoration: line-through; }
-        .date-month-btn.disabled:hover { background: #e0e0e0; color: #888; }
         .save-indicator {
             position: fixed; bottom: 20px; right: 20px;
             padding: 10px 20px; border-radius: 8px; font-size: 0.82rem;
@@ -403,6 +385,81 @@
         .save-indicator.saved { background: #4caf50; color: #fff; opacity: 1; }
         .save-indicator.error { background: #c62828; color: #fff; opacity: 1; }
         .save-indicator.hidden { opacity: 0; }
+
+        /* ====== BILAN ====== */
+        .bilan-controls {
+            display: flex; gap: 8px; padding: 8px 20px; background: #f5f5f5;
+            border-bottom: 1px solid #ddd; flex-shrink: 0; align-items: center; flex-wrap: wrap;
+        }
+        .bilan-controls .month-nav { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+        .bilan-controls .month-label { min-width: 130px; text-align: center; font-weight: 700; color: #c62828; font-size: 0.85rem; }
+        .bilan-controls button {
+            padding: 6px 14px; border: 1px solid #ccc; border-radius: 5px;
+            background: #fff; color: #333; cursor: pointer; font-size: 0.78rem;
+        }
+        .bilan-controls button:hover { background: #e0e0e0; }
+        #bilanTable thead th { position: sticky; z-index: 20; background: #f5f5f5; }
+        #bilanTable thead tr:nth-child(1) th { top: 0; z-index: 27; }
+        #bilanTable thead tr:nth-child(2) th { top: 28px; z-index: 26; }
+        #bilanTable thead tr:nth-child(3) th { top: 50px; z-index: 25; }
+        .bilan-corner {
+            position: sticky; left: 0; z-index: 30 !important;
+            background: #f5f5f5 !important; border-right: 2px solid #ccc;
+            text-align: center; font-weight: 800; font-size: 0.82rem; color: #444;
+            vertical-align: middle; border-bottom: 2px solid #ccc;
+            min-width: 200px; width: 200px; max-width: 200px;
+        }
+        .bilan-cat-row td {
+            font-weight: 800 !important; font-size: 0.78rem !important;
+            border-bottom: 2px solid #bbb !important; border-top: 2px solid #bbb !important;
+        }
+        .bilan-cat-label {
+            position: sticky; left: 0; z-index: 10;
+            border-right: 2px solid #ccc; padding: 6px 12px;
+            font-size: 0.82rem; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 1px; min-width: 200px; width: 200px; max-width: 200px;
+        }
+        .bilan-tool-label {
+            position: sticky; left: 0; z-index: 10;
+            background: #fff; border-right: 2px solid #ccc;
+            padding: 4px 12px 4px 28px; font-size: 0.72rem; font-weight: 600;
+            min-width: 200px; width: 200px; max-width: 200px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+        .bilan-day-cell {
+            text-align: center; vertical-align: middle;
+            border-right: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0;
+            font-size: 0.62rem; padding: 3px 2px;
+            min-width: 52px; max-width: 52px; width: 52px;
+        }
+        .bilan-cat-row .bilan-day-cell {
+            font-weight: 800; font-size: 0.68rem;
+        }
+        .bilan-h { font-weight: 800; color: #333; }
+        .bilan-c { font-weight: 600; color: #1565c0; font-size: 0.58rem; }
+        .bilan-day-header {
+            background: #f5f5f5 !important; color: #666; font-size: 0.62rem;
+            padding: 2px 1px; text-align: center; border-right: 1px solid #e0e0e0;
+            border-bottom: 2px solid #ccc; min-width: 52px; max-width: 52px; width: 52px;
+        }
+        .bilan-day-header.today { background: #c62828 !important; color: #fff; font-weight: 900; }
+        .bilan-total-row td {
+            background: #f0f0f0 !important; font-weight: 900 !important;
+            border-top: 3px solid #999 !important; font-size: 0.72rem !important;
+        }
+        .bilan-total-label {
+            position: sticky; left: 0; z-index: 10;
+            background: #f0f0f0 !important; border-right: 2px solid #ccc;
+            padding: 6px 12px; font-size: 0.82rem; font-weight: 900;
+            min-width: 200px; width: 200px; max-width: 200px;
+        }
+
+        /* Couleurs catégories bilan */
+        .bilan-cat-fondations { background: #fdf6e3; color: #b8860b; }
+        .bilan-cat-verticaux { background: #e8f5e9; color: #2e7d32; }
+        .bilan-cat-horizontaux { background: #fff3e0; color: #e65100; }
+        .bilan-cat-temporelles { background: #f5f5f5; color: #616161; }
+        .bilan-cat-absences { background: #eee; color: #222; }
     </style>
 </head>
 <body>
@@ -428,6 +485,7 @@
         <div class="main-tabs">
             <button class="main-tab home-btn" onclick="goHome()">🏠 Accueil</button>
             <button class="main-tab active" onclick="switchPage('ventilation')">📋 Ventilation</button>
+            <button class="main-tab" onclick="switchPage('bilan')">📊 Bilans</button>
             <button class="main-tab" onclick="switchPage('parametrage')">⚙ Paramétrage</button>
         </div>
         <div class="page active" id="page-ventilation">
@@ -453,13 +511,24 @@
                 </div>
             </div>
             <div class="table-wrapper" id="tableWrapper">
-                <table id="planningTable">
-                    <thead id="tableHead"></thead>
-                    <tbody id="tableBody"></tbody>
-                    <tfoot id="tableFoot"></tfoot>
-                </table>
+                <table id="planningTable"><thead id="tableHead"></thead><tbody id="tableBody"></tbody><tfoot id="tableFoot"></tfoot></table>
             </div>
             <div class="legend" id="legendBar"></div>
+        </div>
+        <div class="page" id="page-bilan">
+            <div class="header"><h1 id="bilanHeaderTitle">📊 Bilans</h1></div>
+            <div class="bilan-controls">
+                <span style="font-size:0.8rem;color:#666;">Synthèse par poste — heures et effectifs</span>
+                <div class="month-nav">
+                    <button onclick="scrollToMonthB(-1)">◀</button>
+                    <span class="month-label" id="monthLabelB"></span>
+                    <button onclick="scrollToMonthB(1)">▶</button>
+                    <button onclick="scrollToTodayB()" style="margin-left:8px;">📍 Aujourd'hui</button>
+                </div>
+            </div>
+            <div class="table-wrapper" id="bilanTableWrapper">
+                <table id="bilanTable"><thead id="bilanHead"></thead><tbody id="bilanBody"></tbody></table>
+            </div>
         </div>
         <div class="page" id="page-parametrage">
             <div class="param-page">
@@ -479,7 +548,7 @@
                 </div>
                 <div class="param-sub-content" id="paramSub-dates">
                     <h2>📅 Paramétrage des dates</h2>
-                    <p class="info">Activez ou désactivez des mois. Un mois avec des données ne peut pas être désactivé.</p>
+                    <p class="info">Activez ou désactivez des mois.</p>
                     <div id="paramDatesContent"></div>
                     <div class="param-actions">
                         <button class="primary" onclick="switchPage('ventilation')">← Retour</button>
@@ -495,178 +564,30 @@
     <div class="save-indicator" id="saveIndicator"></div>
 
     <script>
-    // ===== FIREBASE =====
-    const firebaseConfig = {
-        apiKey: "AIzaSyDuGND3F_vuz-Y-aQbQ4JECIRYM54VyX6Q",
-        authDomain: "planning-compagnons.firebaseapp.com",
-        projectId: "planning-compagnons",
-        storageBucket: "planning-compagnons.firebasestorage.app",
-        messagingSenderId: "1032970469864",
-        appId: "1:1032970469864:web:a915af477c65cef4e1645d",
-        measurementId: "G-3F3VDEHMFR"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    const firebaseConfig={apiKey:"AIzaSyDuGND3F_vuz-Y-aQbQ4JECIRYM54VyX6Q",authDomain:"planning-compagnons.firebaseapp.com",projectId:"planning-compagnons",storageBucket:"planning-compagnons.firebasestorage.app",messagingSenderId:"1032970469864",appId:"1:1032970469864:web:a915af477c65cef4e1645d",measurementId:"G-3F3VDEHMFR"};
+    firebase.initializeApp(firebaseConfig);const db=firebase.firestore();
+    let projects=[],currentProjectId=null;
+    function getProjectDocId(){return'ventilation_'+currentProjectId;}
+    function loadProjectsList(){db.collection("projects_index").doc("ventilation_list").get().then(doc=>{projects=(doc.exists&&doc.data().projects)?doc.data().projects:[];renderHome();}).catch(()=>{projects=[];renderHome();});}
+    function saveProjectsList(){db.collection("projects_index").doc("ventilation_list").set({projects}).catch(err=>console.error(err));}
+    function renderHome(){const grid=document.getElementById('homeGrid');grid.innerHTML='';projects.forEach(proj=>{const card=document.createElement('div');card.className='home-card';card.innerHTML='<div class="card-icon">🏗</div><div class="card-name">'+proj.name+'</div><div class="card-date">Créé le '+(proj.createdAt||'—')+'</div><div class="card-delete" onclick="event.stopPropagation();deleteProject(\''+proj.id+'\')">🗑 Supprimer</div>';card.addEventListener('click',()=>openProject(proj.id));grid.appendChild(card);});const a=document.createElement('div');a.className='home-card add-new';a.innerHTML='<div class="card-icon">➕</div><div class="card-name">Nouveau chantier</div>';a.addEventListener('click',openNewProjectModal);grid.appendChild(a);}
+    function openNewProjectModal(){document.getElementById('newProjectName').value='';document.getElementById('modalNewProject').classList.remove('hidden');document.getElementById('newProjectName').focus();}
+    function closeNewProjectModal(){document.getElementById('modalNewProject').classList.add('hidden');}
+    function confirmNewProject(){const name=document.getElementById('newProjectName').value.trim();if(!name){flashBlock('⚠ Veuillez saisir un nom');return;}const id='proj_'+Date.now()+'_'+Math.random().toString(36).substr(2,6);const now=new Date();const createdAt=String(now.getDate()).padStart(2,'0')+'/'+String(now.getMonth()+1).padStart(2,'0')+'/'+now.getFullYear();projects.push({id,name,createdAt});saveProjectsList();closeNewProjectModal();openProject(id);}
+    function deleteProject(projId){const proj=projects.find(p=>p.id===projId);if(!proj)return;if(!confirm('Supprimer "'+proj.name+'" et toutes ses données ?'))return;projects=projects.filter(p=>p.id!==projId);saveProjectsList();db.collection("ventilation_data").doc('ventilation_'+projId).delete().catch(()=>{});renderHome();}
+    function resetProjectState(){cellData={};lockedDays={};enabledTools={};for(const[,ts]of Object.entries(CATEGORIES))ts.forEach(t=>enabledTools[t]=true);enabledMonths={};for(let y=GLOBAL_START_YEAR;y<=GLOBAL_END_YEAR;y++)for(let m=0;m<12;m++){const k=y+'-'+String(m+1).padStart(2,'0');enabledMonths[k]=(new Date(y,m,1)>=new Date(2026,5,1)&&new Date(y,m,1)<=new Date(2027,4,1));}currentTool=null;currentCat='fondations';isPainting=false;fillMode=null;rowCount=0;currentMonthIndex=0;bilanMonthIndex=0;colWidths={entite:60,nom:100,prenom:90,matricule:70};}
+    function openProject(projId){currentProjectId=projId;const proj=projects.find(p=>p.id===projId);resetProjectState();document.getElementById('homePage').classList.add('hidden');document.getElementById('appContainer').classList.add('active');document.getElementById('headerTitle').textContent='📋 '+(proj?proj.name:'Chantier')+' — Compagnons GO';document.getElementById('bilanHeaderTitle').textContent='📊 Bilans — '+(proj?proj.name:'');document.getElementById('currentToolLabel').textContent='Aucun — sélectionnez un poste ci-dessus';document.getElementById('tableBody').innerHTML='';document.getElementById('tableFoot').innerHTML='';generateWorkingDays();buildCategoryBar();buildHeader();buildLegend();renderRibbon();updateFillButtons();firebaseLoadProject();}
+    function goHome(){if(currentProjectId)autoSaveNow();currentProjectId=null;document.getElementById('appContainer').classList.remove('active');document.getElementById('homePage').classList.remove('hidden');document.getElementById('tableBody').innerHTML='';document.getElementById('tableFoot').innerHTML='';rowCount=0;loadProjectsList();}
+    function showSaveStatus(s){const el=document.getElementById('saveIndicator');el.className='save-indicator';if(s==='saving'){el.textContent='⏳ Sauvegarde...';el.classList.add('saving');}else if(s==='saved'){el.textContent='✅ Sauvegardé';el.classList.add('saved');setTimeout(()=>el.className='save-indicator hidden',2000);}else if(s==='error'){el.textContent='❌ Erreur sauvegarde';el.classList.add('error');setTimeout(()=>el.className='save-indicator hidden',4000);}}
+    let firebaseSaveTimeout=null;
+    function autoSave(){if(!currentProjectId)return;clearTimeout(firebaseSaveTimeout);firebaseSaveTimeout=setTimeout(()=>autoSaveNow(),2000);}
+    function autoSaveNow(){if(!currentProjectId)return;showSaveStatus('saving');const data=gatherSaveData();const clean={};for(const[k,v]of Object.entries(data.cells)){if(v&&v.slots&&v.slots.some(s=>s!==null))clean[k]=v;}data.cells=clean;db.collection("ventilation_data").doc(getProjectDocId()).set(data).then(()=>showSaveStatus('saved')).catch(err=>{showSaveStatus('error');console.error(err);});}
+    function firebaseLoadProject(){if(!currentProjectId)return;db.collection("ventilation_data").doc(getProjectDocId()).get().then(doc=>{if(!doc.exists){for(let i=0;i<INITIAL_ROWS;i++)addRow();buildFooter();setTimeout(scrollToToday,500);autoSave();return;}const data=doc.data();cellData=data.cells||{};lockedDays=data.lockedDays||{};if(data.enabledTools)for(const[k,v]of Object.entries(data.enabledTools)){if(k in enabledTools)enabledTools[k]=v;}if(data.enabledMonths)for(const[k,v]of Object.entries(data.enabledMonths))enabledMonths[k]=v;if(data.colWidths)colWidths=data.colWidths;generateWorkingDays();buildHeader();document.getElementById('tableBody').innerHTML='';rowCount=0;const sRC=data.rowCount||INITIAL_ROWS;for(let i=0;i<sRC;i++)addRow();if(data.fields)Object.entries(data.fields).forEach(([row,fields])=>{Object.entries(fields).forEach(([field,value])=>{const inp=document.querySelector(`input[data-row="${row}"][data-field="${field}"]`);if(inp)inp.value=value;});});buildFooter();showSaveStatus('saved');setTimeout(scrollToToday,500);}).catch(err=>{console.error(err);showSaveStatus('error');for(let i=0;i<INITIAL_ROWS;i++)addRow();buildFooter();});}
 
-    // ===== PROJETS =====
-    let projects = [];
-    let currentProjectId = null;
-    function getProjectDocId() { return 'ventilation_' + currentProjectId; }
-
-    function loadProjectsList() {
-        db.collection("projects_index").doc("ventilation_list").get()
-            .then(doc => {
-                projects = (doc.exists && doc.data().projects) ? doc.data().projects : [];
-                renderHome();
-            })
-            .catch(() => { projects = []; renderHome(); });
-    }
-    function saveProjectsList() {
-        db.collection("projects_index").doc("ventilation_list").set({ projects }).catch(err => console.error(err));
-    }
-    function renderHome() {
-        const grid = document.getElementById('homeGrid'); grid.innerHTML = '';
-        projects.forEach(proj => {
-            const card = document.createElement('div'); card.className = 'home-card';
-            card.innerHTML = '<div class="card-icon">🏗</div><div class="card-name">'+proj.name+'</div><div class="card-date">Créé le '+(proj.createdAt||'—')+'</div><div class="card-delete" onclick="event.stopPropagation();deleteProject(\''+proj.id+'\')">🗑 Supprimer</div>';
-            card.addEventListener('click', () => openProject(proj.id));
-            grid.appendChild(card);
-        });
-        const addCard = document.createElement('div'); addCard.className = 'home-card add-new';
-        addCard.innerHTML = '<div class="card-icon">➕</div><div class="card-name">Nouveau chantier</div>';
-        addCard.addEventListener('click', openNewProjectModal);
-        grid.appendChild(addCard);
-    }
-    function openNewProjectModal() {
-        document.getElementById('newProjectName').value = '';
-        document.getElementById('modalNewProject').classList.remove('hidden');
-        document.getElementById('newProjectName').focus();
-    }
-    function closeNewProjectModal() { document.getElementById('modalNewProject').classList.add('hidden'); }
-    function confirmNewProject() {
-        const name = document.getElementById('newProjectName').value.trim();
-        if (!name) { flashBlock('⚠ Veuillez saisir un nom'); return; }
-        const id = 'proj_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
-        const now = new Date();
-        const createdAt = String(now.getDate()).padStart(2,'0')+'/'+String(now.getMonth()+1).padStart(2,'0')+'/'+now.getFullYear();
-        projects.push({ id, name, createdAt });
-        saveProjectsList(); closeNewProjectModal(); openProject(id);
-    }
-    function deleteProject(projId) {
-        const proj = projects.find(p => p.id === projId); if (!proj) return;
-        if (!confirm('Supprimer "' + proj.name + '" et toutes ses données ?')) return;
-        projects = projects.filter(p => p.id !== projId); saveProjectsList();
-        db.collection("ventilation_data").doc('ventilation_' + projId).delete().catch(()=>{});
-        renderHome();
-    }
-
-    function resetProjectState() {
-        cellData = {}; lockedDays = {};
-        enabledTools = {};
-        for (const [, ts] of Object.entries(CATEGORIES)) ts.forEach(t => enabledTools[t] = true);
-        enabledMonths = {};
-        for (let y = GLOBAL_START_YEAR; y <= GLOBAL_END_YEAR; y++)
-            for (let m = 0; m < 12; m++) {
-                const k = y + '-' + String(m + 1).padStart(2, '0');
-                const d = new Date(y, m, 1);
-                enabledMonths[k] = (d >= new Date(2026, 5, 1) && d <= new Date(2027, 4, 1));
-            }
-        currentTool = null; currentCat = 'fondations'; isPainting = false;
-        fillMode = null; rowCount = 0; currentMonthIndex = 0;
-        colWidths = { entite: 60, nom: 100, prenom: 90, matricule: 70 };
-    }
-
-    function openProject(projId) {
-        currentProjectId = projId;
-        const proj = projects.find(p => p.id === projId);
-        resetProjectState();
-        document.getElementById('homePage').classList.add('hidden');
-        document.getElementById('appContainer').classList.add('active');
-        document.getElementById('headerTitle').textContent = '📋 ' + (proj ? proj.name : 'Chantier') + ' — Compagnons GO';
-        document.getElementById('currentToolLabel').textContent = 'Aucun — sélectionnez un poste ci-dessus';
-        document.getElementById('tableBody').innerHTML = '';
-        document.getElementById('tableFoot').innerHTML = '';
-        generateWorkingDays(); buildCategoryBar(); buildHeader(); buildLegend(); renderRibbon(); updateFillButtons();
-        firebaseLoadProject();
-    }
-    function goHome() {
-        if (currentProjectId) autoSaveNow();
-        currentProjectId = null;
-        document.getElementById('appContainer').classList.remove('active');
-        document.getElementById('homePage').classList.remove('hidden');
-        document.getElementById('tableBody').innerHTML = '';
-        document.getElementById('tableFoot').innerHTML = '';
-        rowCount = 0;
-        loadProjectsList();
-    }
-
-    // ===== FIREBASE SAVE/LOAD =====
-    function showSaveStatus(status) {
-        const el = document.getElementById('saveIndicator'); el.className = 'save-indicator';
-        if (status === 'saving') { el.textContent = '⏳ Sauvegarde...'; el.classList.add('saving'); }
-        else if (status === 'saved') { el.textContent = '✅ Sauvegardé'; el.classList.add('saved'); setTimeout(() => el.className = 'save-indicator hidden', 2000); }
-        else if (status === 'error') { el.textContent = '❌ Erreur sauvegarde'; el.classList.add('error'); setTimeout(() => el.className = 'save-indicator hidden', 4000); }
-    }
-    let firebaseSaveTimeout = null;
-    function autoSave() {
-        if (!currentProjectId) return;
-        clearTimeout(firebaseSaveTimeout);
-        firebaseSaveTimeout = setTimeout(() => autoSaveNow(), 2000);
-    }
-    function autoSaveNow() {
-        if (!currentProjectId) return;
-        showSaveStatus('saving');
-        const data = gatherSaveData();
-        // Nettoyer cellData: ne sauvegarder que les cellules non vides
-        const cleanCells = {};
-        for (const [k, v] of Object.entries(data.cells)) {
-            if (v && v.slots && v.slots.some(s => s !== null)) cleanCells[k] = v;
-        }
-        data.cells = cleanCells;
-        db.collection("ventilation_data").doc(getProjectDocId()).set(data)
-            .then(() => showSaveStatus('saved'))
-            .catch(err => { showSaveStatus('error'); console.error("Erreur sauvegarde:", err); });
-    }
-    function firebaseLoadProject() {
-        if (!currentProjectId) return;
-        db.collection("ventilation_data").doc(getProjectDocId()).get()
-            .then(doc => {
-                if (!doc.exists) {
-                    for (let i = 0; i < INITIAL_ROWS; i++) addRow();
-                    buildFooter(); setTimeout(scrollToToday, 500); autoSave(); return;
-                }
-                const data = doc.data();
-                cellData = data.cells || {};
-                lockedDays = data.lockedDays || {};
-                if (data.enabledTools) for (const [k, v] of Object.entries(data.enabledTools)) { if (k in enabledTools) enabledTools[k] = v; }
-                if (data.enabledMonths) {
-                    // Écraser complètement avec les données Firebase
-                    for (const [k, v] of Object.entries(data.enabledMonths)) enabledMonths[k] = v;
-                }
-                if (data.colWidths) colWidths = data.colWidths;
-                // Reconstruire avec les bons mois
-                generateWorkingDays(); buildHeader();
-                document.getElementById('tableBody').innerHTML = ''; rowCount = 0;
-                const sRC = data.rowCount || INITIAL_ROWS;
-                for (let i = 0; i < sRC; i++) addRow();
-                if (data.fields) Object.entries(data.fields).forEach(([row, fields]) => {
-                    Object.entries(fields).forEach(([field, value]) => {
-                        const inp = document.querySelector(`input[data-row="${row}"][data-field="${field}"]`);
-                        if (inp) inp.value = value;
-                    });
-                });
-                buildFooter(); showSaveStatus('saved'); setTimeout(scrollToToday, 500);
-            })
-            .catch(err => { console.error(err); showSaveStatus('error');
-                for (let i = 0; i < INITIAL_ROWS; i++) addRow(); buildFooter();
-            });
-    }
-
-    // ===== DONNÉES MÉTIER =====
     const TOOL_COLORS={"Recépage TDP":{bg:"#f5e6a3",fg:"#6d5a00"},"Puit":{bg:"#f5e6a3",fg:"#6d5a00"},"Tête de pieux":{bg:"#f5e6a3",fg:"#6d5a00"},"Longrine CEP":{bg:"#f5e6a3",fg:"#6d5a00"},"Longrine préfa":{bg:"#f5e6a3",fg:"#6d5a00"},"Semelle isolée":{bg:"#f5e6a3",fg:"#6d5a00"},"Semelle filante":{bg:"#f5e6a3",fg:"#6d5a00"},"Fosse":{bg:"#f5e6a3",fg:"#6d5a00"},"Dallage":{bg:"#d4a017",fg:"#fff"},"Dalle portée":{bg:"#d4a017",fg:"#fff"},"Radier":{bg:"#d4a017",fg:"#fff"},"Rampe":{bg:"#d4a017",fg:"#fff"},"Voile banché":{bg:"#2e7d32",fg:"#fff"},"Voile courbe":{bg:"#2e7d32",fg:"#fff"},"Prémur":{bg:"#2e7d32",fg:"#fff"},"Voile manuportable":{bg:"#2e7d32",fg:"#fff"},"Voile préfa":{bg:"#2e7d32",fg:"#fff"},"Mur bois":{bg:"#a1887f",fg:"#fff"},"Poteau carton":{bg:"#a5d6a7",fg:"#1b5e20"},"Poteau banché":{bg:"#a5d6a7",fg:"#1b5e20"},"Poteau préfa":{bg:"#a5d6a7",fg:"#1b5e20"},"Poteau manuportable":{bg:"#a5d6a7",fg:"#1b5e20"},"Poteau bois":{bg:"#a1887f",fg:"#fff"},"Poteau métal":{bg:"#ce93d8",fg:"#4a148c"},"Poutre préfa":{bg:"#ffcc80",fg:"#bf360c"},"Poutre CEP":{bg:"#ffcc80",fg:"#bf360c"},"Poutre précontrainte":{bg:"#ffcc80",fg:"#bf360c"},"Solive bois":{bg:"#8d6e63",fg:"#fff"},"Poutre métal":{bg:"#ab47bc",fg:"#fff"},"Plancher tradi":{bg:"#e65100",fg:"#fff"},"Prédalle":{bg:"#e65100",fg:"#fff"},"Alvéolaire":{bg:"#e65100",fg:"#fff"},"Balcon":{bg:"#e65100",fg:"#fff"},"Plancher bois":{bg:"#5d4037",fg:"#fff"},"Plancher collaborant":{bg:"#7b1fa2",fg:"#fff"},"Escalier":{bg:"#f48fb1",fg:"#880e4f"},"Palier escalier":{bg:"#f48fb1",fg:"#880e4f"},"Conditionnement":{bg:"#9e9e9e",fg:"#fff"},"Installation":{bg:"#9e9e9e",fg:"#fff"},"Démontage":{bg:"#9e9e9e",fg:"#fff"},"Repli":{bg:"#9e9e9e",fg:"#fff"},"Scellements":{bg:"#9e9e9e",fg:"#fff"},"Finitions":{bg:"#9e9e9e",fg:"#fff"},"Grue":{bg:"#9e9e9e",fg:"#fff"},"Divers":{bg:"#9e9e9e",fg:"#fff"},"Absent":{bg:"#333",fg:"#fff"}};
     function getToolColor(n){return TOOL_COLORS[n]||{bg:"#9e9e9e",fg:"#fff"};}
     const CATEGORIES={fondations:["Recépage TDP","Puit","Tête de pieux","Longrine CEP","Longrine préfa","Semelle isolée","Semelle filante","Fosse","Dallage","Dalle portée","Radier","Rampe"],verticaux:["Voile banché","Voile courbe","Mur bois","Prémur","Voile manuportable","Voile préfa","Poteau carton","Poteau banché","Poteau préfa","Poteau manuportable","Poteau bois","Poteau métal"],horizontaux:["Poutre préfa","Poutre CEP","Poutre précontrainte","Solive bois","Poutre métal","Plancher tradi","Prédalle","Alvéolaire","Balcon","Plancher bois","Plancher collaborant","Escalier","Palier escalier"],temporelles:["Conditionnement","Installation","Démontage","Repli","Scellements","Finitions","Grue","Divers"],absences:["Absent"]};
-    const CAT_LABELS={fondations:"Fondations",verticaux:"Verticaux",horizontaux:"Horizontaux",temporelles:"Temporelles & indépendantes",absences:"Absences"};
+    const CAT_LABELS={fondations:"Fondations",verticaux:"Verticaux",horizontaux:"Horizontaux",temporelles:"Temporelles & indép.",absences:"Absences"};
     let enabledTools={};for(const[,ts]of Object.entries(CATEGORIES))ts.forEach(t=>enabledTools[t]=true);
     const ABSENT_TOOLS=new Set(["Absent"]);
     function shortLabel(n){const m={"Recépage TDP":"Recep","Puit":"Puit","Tête de pieux":"TdP","Longrine CEP":"LGcep","Longrine préfa":"LGpré","Semelle isolée":"SI","Semelle filante":"SF","Fosse":"Foss","Dallage":"Dalla","Dalle portée":"DP","Radier":"Rad","Rampe":"Ramp","Voile banché":"Vban","Voile courbe":"Vcou","Mur bois":"MOB","Prémur":"Prém","Voile manuportable":"Vman","Voile préfa":"Vpré","Poteau carton":"PTcar","Poteau banché":"PTban","Poteau préfa":"PTpré","Poteau manuportable":"PTman","Poteau bois":"PTboi","Poteau métal":"PTmét","Poutre préfa":"POpré","Poutre CEP":"POcep","Poutre précontrainte":"Préco","Solive bois":"Soliv","Poutre métal":"POmét","Plancher tradi":"PHtrad","Prédalle":"Préda","Alvéolaire":"Alvéo","Balcon":"Balc","Plancher bois":"CLT","Plancher collaborant":"Collab","Escalier":"Esc","Palier escalier":"Palier","Conditionnement":"Condi","Installation":"Insta","Démontage":"Démon","Repli":"Repli","Scellements":"Scell","Finitions":"Finit","Grue":"Grue","Divers":"Diver","Absent":"ABS"};return m[n]||n.substring(0,5);}
@@ -683,10 +604,9 @@
     function monthKey(y,m){return y+'-'+String(m+1).padStart(2,'0');}
     function isMonthEnabled(y,m){return enabledMonths[monthKey(y,m)]===true;}
     function isMonthHasData(y,m){for(const[k,cd]of Object.entries(cellData)){if(!cd.slots||!cd.slots.some(s=>s!==null))continue;const parts=k.split('_');if(parts.length<2)continue;const ds=parts.slice(1).join('_');const p=ds.split('-');if(parseInt(p[0])===y&&parseInt(p[1])-1===m)return true;}return false;}
-
     const BASE_HOURS=7,HALF=0.5,MIN_H=0,MAX_H=12,INITIAL_ROWS=10,MAX_SLOTS=3;
     let currentTool=null,currentCat='fondations',isPainting=false,paintSlotIndex=0;
-    let workingDays=[],monthBoundaries=[],weekBoundaries=[],currentMonthIndex=0,rowCount=0,noToolTimeout=null,blockTimeout=null;
+    let workingDays=[],monthBoundaries=[],weekBoundaries=[],currentMonthIndex=0,bilanMonthIndex=0,rowCount=0,noToolTimeout=null,blockTimeout=null;
     let cellData={},lockedDays={},currentParamSub='postes';
     let colWidths={entite:60,nom:100,prenom:90,matricule:70};
     let fillMode=null;
@@ -698,125 +618,29 @@
     function isDayLocked(dk){return lockedDays[dk]===true;}
     function formatHourHTML(h){if(h===0)return'<span class="hour-display"><span class="h-num">0</span><span class="h-unit">h</span></span>';const hrs=Math.floor(h),mins=Math.round((h-hrs)*60);let html='<span class="hour-display"><span class="h-num">'+hrs+'</span><span class="h-unit">h</span>';if(mins>0)html+='<span class="h-min">'+String(mins).padStart(2,'0')+'</span>';return html+'</span>';}
     function toggleFillMode(mode){if(fillMode===mode)fillMode=null;else fillMode=mode;updateFillButtons();}
-    function updateFillButtons(){
-        const bW=document.getElementById('btnFillWeek'),bA=document.getElementById('btnFillAll');
-        if(bW)bW.classList.toggle('fill-active',fillMode==='week');
-        if(bA)bA.classList.toggle('fill-active',fillMode==='all');
-        const hint=document.getElementById('fillModeHint');
-        if(hint){if(fillMode==='week')hint.textContent="🔵 Mode: Remplir jusqu'à fin de semaine";else if(fillMode==='all')hint.textContent="🔵 Mode: Remplir jusqu'à nouvel ordre";else hint.textContent='Clic = appliquer · ＋/− = scinder/fusionner · Clic G/D heures = ±30min';}
-    }
+    function updateFillButtons(){const bW=document.getElementById('btnFillWeek'),bA=document.getElementById('btnFillAll');if(bW)bW.classList.toggle('fill-active',fillMode==='week');if(bA)bA.classList.toggle('fill-active',fillMode==='all');const hint=document.getElementById('fillModeHint');if(hint){if(fillMode==='week')hint.textContent="🔵 Mode: Remplir jusqu'à fin de semaine";else if(fillMode==='all')hint.textContent="🔵 Mode: Remplir jusqu'à nouvel ordre";else hint.textContent='Clic = appliquer · ＋/− = scinder/fusionner · Clic G/D heures = ±30min';}}
     function getWorkingDayIndex(dateKey){return workingDays.findIndex(wd=>wd.key===dateKey);}
-    function fillFromDay(row,startDateKey,slotIdx){
-        const startIdx=getWorkingDayIndex(startDateKey);if(startIdx<0)return;const startWd=workingDays[startIdx];let endIdx;
-        if(fillMode==='week'){endIdx=startIdx;const wk=startWd.week;for(let i=startIdx;i<workingDays.length;i++){if(workingDays[i].week===wk)endIdx=i;else break;}}
-        else endIdx=workingDays.length-1;
-        const tool=currentTool;const isAbs=isAbsentTool(tool);
-        for(let i=startIdx;i<=endIdx;i++){const dk=workingDays[i].key;if(isDayLocked(dk))continue;const cd=getCell(row,dk);const si=Math.min(slotIdx,cd.slots.length-1);cd.slots[si]={tool:tool,cat:getCatForTool(tool)};if(isAbs){cd.hours[si]=0;}else{const filled=cd.slots.filter(s=>s&&!isSlotAbsent(s)).length;if(filled===1&&cd.hours.reduce((a,b)=>a+b,0)===0){cd.hours[si]=BASE_HOURS;}else{cd.hours=cd.slots.map(s=>(s&&!isSlotAbsent(s))?Math.round((BASE_HOURS/Math.max(1,filled))*2)/2:0);let diff=Math.round((BASE_HOURS-cd.hours.reduce((a,b)=>a+b,0))*2)/2;if(diff){for(let j=0;j<cd.hours.length;j++){if(cd.slots[j]&&!isSlotAbsent(cd.slots[j])){cd.hours[j]+=diff;break;}}}}}
-        const hTd=getHourTd(row,dk);if(hTd)renderHourCell(hTd,row,dk);const td=document.querySelector(`td.data-cell[data-row="${row}"][data-date="${dk}"]`);if(td)renderPosteCell(td,row,dk);}
-        updateFooter();autoSave();
-    }
-    function generateWorkingDays(){
-        workingDays=[];monthBoundaries=[];weekBoundaries=[];let lastMonth=-1,lastWeek=-1;
-        for(let y=GLOBAL_START_YEAR;y<=GLOBAL_END_YEAR;y++)for(let m=0;m<12;m++){if(!isMonthEnabled(y,m))continue;let d=new Date(y,m,1);while(d.getMonth()===m){const dow=d.getDay();if(dow!==0&&dow!==6){const wn=getWeekNumber(d);const entry={date:new Date(d),day:d.getDate(),dow,month:d.getMonth(),year:d.getFullYear(),key:toLocalDateStr(d),week:wn};const idx=workingDays.length;workingDays.push(entry);const mK=y*100+m;if(mK!==lastMonth){monthBoundaries.push({month:m,year:y,startIndex:idx,count:0});lastMonth=mK;}monthBoundaries[monthBoundaries.length-1].count++;if(wn!==lastWeek){weekBoundaries.push({week:wn,startIndex:idx,count:0});lastWeek=wn;}weekBoundaries[weekBoundaries.length-1].count++;}d.setDate(d.getDate()+1);}}
-    }
+    function fillFromDay(row,startDateKey,slotIdx){const startIdx=getWorkingDayIndex(startDateKey);if(startIdx<0)return;const startWd=workingDays[startIdx];let endIdx;if(fillMode==='week'){endIdx=startIdx;const wk=startWd.week;for(let i=startIdx;i<workingDays.length;i++){if(workingDays[i].week===wk)endIdx=i;else break;}}else endIdx=workingDays.length-1;const tool=currentTool;const isAbs=isAbsentTool(tool);for(let i=startIdx;i<=endIdx;i++){const dk=workingDays[i].key;if(isDayLocked(dk))continue;const cd=getCell(row,dk);const si=Math.min(slotIdx,cd.slots.length-1);cd.slots[si]={tool:tool,cat:getCatForTool(tool)};if(isAbs){cd.hours[si]=0;}else{const filled=cd.slots.filter(s=>s&&!isSlotAbsent(s)).length;if(filled===1&&cd.hours.reduce((a,b)=>a+b,0)===0){cd.hours[si]=BASE_HOURS;}else{cd.hours=cd.slots.map(s=>(s&&!isSlotAbsent(s))?Math.round((BASE_HOURS/Math.max(1,filled))*2)/2:0);let diff=Math.round((BASE_HOURS-cd.hours.reduce((a,b)=>a+b,0))*2)/2;if(diff){for(let j=0;j<cd.hours.length;j++){if(cd.slots[j]&&!isSlotAbsent(cd.slots[j])){cd.hours[j]+=diff;break;}}}}}const hTd=getHourTd(row,dk);if(hTd)renderHourCell(hTd,row,dk);const td=document.querySelector(`td.data-cell[data-row="${row}"][data-date="${dk}"]`);if(td)renderPosteCell(td,row,dk);}updateFooter();autoSave();}
+    function generateWorkingDays(){workingDays=[];monthBoundaries=[];weekBoundaries=[];let lastMonth=-1,lastWeek=-1;for(let y=GLOBAL_START_YEAR;y<=GLOBAL_END_YEAR;y++)for(let m=0;m<12;m++){if(!isMonthEnabled(y,m))continue;let d=new Date(y,m,1);while(d.getMonth()===m){const dow=d.getDay();if(dow!==0&&dow!==6){const wn=getWeekNumber(d);const entry={date:new Date(d),day:d.getDate(),dow,month:d.getMonth(),year:d.getFullYear(),key:toLocalDateStr(d),week:wn};const idx=workingDays.length;workingDays.push(entry);const mK=y*100+m;if(mK!==lastMonth){monthBoundaries.push({month:m,year:y,startIndex:idx,count:0});lastMonth=mK;}monthBoundaries[monthBoundaries.length-1].count++;if(wn!==lastWeek){weekBoundaries.push({week:wn,startIndex:idx,count:0});lastWeek=wn;}weekBoundaries[weekBoundaries.length-1].count++;}d.setDate(d.getDate()+1);}}}
     function isLastDayOfMonth(idx){if(idx>=workingDays.length-1)return true;return workingDays[idx].month!==workingDays[idx+1].month||workingDays[idx].year!==workingDays[idx+1].year;}
     function isLastDayOfWeek(idx){if(idx>=workingDays.length-1)return true;return workingDays[idx].week!==workingDays[idx+1].week;}
     function buildCategoryBar(){const bar=document.getElementById('categoryBar');bar.innerHTML='';for(const[cat]of Object.entries(CATEGORIES)){const btn=document.createElement('button');btn.className='cat-tab'+(currentCat===cat?' active':'');btn.setAttribute('data-cat',cat);btn.textContent=CAT_LABELS[cat];btn.addEventListener('click',()=>showCategory(cat));bar.appendChild(btn);}}
     function buildLegend(){const bar=document.getElementById('legendBar');bar.innerHTML='<span style="color:#999;">Légende :</span>';[{l:"Fond.(struct)",c:"#f5e6a3"},{l:"Fond.(surf)",c:"#d4a017"},{l:"Voiles",c:"#2e7d32"},{l:"Bois",c:"#a1887f"},{l:"Poteaux",c:"#a5d6a7"},{l:"Métal(V)",c:"#ce93d8"},{l:"Poutres",c:"#ffcc80"},{l:"Métal(H)",c:"#ab47bc"},{l:"Planchers",c:"#e65100"},{l:"Bois(H)",c:"#5d4037"},{l:"Collab.",c:"#7b1fa2"},{l:"Escaliers",c:"#f48fb1"},{l:"Temp.",c:"#9e9e9e"},{l:"Absent",c:"#333"}].forEach(g=>{const i=document.createElement('div');i.className='legend-item';i.innerHTML='<div class="legend-color" style="background:'+g.c+';"></div> '+g.l;bar.appendChild(i);});const e=document.createElement('div');e.className='legend-item';e.style.marginLeft='12px';e.innerHTML='<span style="font-weight:800;">NΩ</span> = effectif &nbsp;<span style="color:#c62828;font-weight:900;">Rouge</span> = HS';bar.appendChild(e);}
-    function applyColWidths(){
-        const w=colWidths,lp=[0,w.entite,w.entite+w.nom,w.entite+w.nom+w.prenom],ws=[w.entite,w.nom,w.prenom,w.matricule],fs=['entite','nom','prenom','matricule'];
-        fs.forEach((f,i)=>{document.querySelectorAll(`.ncol-${f}`).forEach(el=>{el.style.left=lp[i]+'px';el.style.minWidth=ws[i]+'px';el.style.width=ws[i]+'px';el.style.maxWidth=ws[i]+'px';});});
-        const tw=totalNameWidth();
-        document.querySelectorAll('.corner-main,.footer-cell,.footer-validate-label,.footer-edit-label').forEach(el=>{el.style.minWidth=tw+'px';el.style.width=tw+'px';el.style.maxWidth=tw+'px';});
-    }
-    function buildHeader(){
-        const thead=document.getElementById('tableHead');thead.innerHTML='';const todayKey=toLocalDateStr(new Date());
-        const mR=document.createElement('tr');mR.className='hdr-months';const cornerTh=document.createElement('th');cornerTh.className='corner-main';cornerTh.rowSpan=3;cornerTh.colSpan=4;cornerTh.textContent='Compagnons';mR.appendChild(cornerTh);
-        monthBoundaries.forEach(mb=>{const th=document.createElement('th');th.className='month-header month-border-r';th.colSpan=mb.count*2;th.textContent=MONTHS_FR[mb.month]+' '+mb.year;mR.appendChild(th);});thead.appendChild(mR);
-        const wR=document.createElement('tr');wR.className='hdr-weeks';weekBoundaries.forEach(wb=>{const th=document.createElement('th');th.className='week-header';th.colSpan=wb.count*2;th.textContent='S'+wb.week;const li=wb.startIndex+wb.count-1;if(isLastDayOfMonth(li))th.classList.add('month-border-r');else th.classList.add('week-border-r');wR.appendChild(th);});thead.appendChild(wR);
-        const dR=document.createElement('tr');dR.className='hdr-days';workingDays.forEach((wd,idx)=>{const th=document.createElement('th');th.className='day-header-group';th.colSpan=2;th.setAttribute('data-date',wd.key);if(wd.key===todayKey)th.classList.add('today');if(isLastDayOfMonth(idx))th.classList.add('month-border-r');else if(isLastDayOfWeek(idx))th.classList.add('week-border-r');th.textContent=DAYS_FR[wd.dow].charAt(0)+wd.day;th.title=DAYS_FR[wd.dow]+' '+wd.day+' '+MONTHS_FR[wd.month]+' '+wd.year;dR.appendChild(th);});thead.appendChild(dR);
-        const sR=document.createElement('tr');sR.className='hdr-sub';
-        [{label:'Entité',key:'entite'},{label:'Nom',key:'nom'},{label:'Prénom',key:'prenom'},{label:'Matricule',key:'matricule'}].forEach((sc,i)=>{
-            const th=document.createElement('th');th.className='sub-header-name ncol-'+sc.key+(i===3?' last-name-col':'');th.textContent=sc.label;th.style.position='sticky';
-            const handle=document.createElement('div');handle.className='col-resize-handle';let startX,startW;
-            handle.addEventListener('mousedown',e=>{e.preventDefault();e.stopPropagation();startX=e.clientX;startW=colWidths[sc.key];
-                const onMove=ev=>{colWidths[sc.key]=Math.max(40,startW+(ev.clientX-startX));applyColWidths();};
-                const onUp=()=>{document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);};
-                document.addEventListener('mousemove',onMove);document.addEventListener('mouseup',onUp);});
-            th.appendChild(handle);sR.appendChild(th);});
-        workingDays.forEach((wd,idx)=>{const tH=document.createElement('th');tH.className='sub-header sub-h';tH.textContent='H';sR.appendChild(tH);const tP=document.createElement('th');tP.className='sub-header sub-p';tP.textContent='Poste';if(isLastDayOfMonth(idx))tP.classList.add('month-border-r');else if(isLastDayOfWeek(idx))tP.classList.add('week-border-r');sR.appendChild(tP);});
-        thead.appendChild(sR);applyColWidths();
-    }
-    function renderHourCell(hTd,row,date){
-        const cd=getCell(row,date),totalH=cd.hours.reduce((a,b)=>a+b,0),overtime=totalH>BASE_HOURS;
-        const allAbsent=cd.slots.every(s=>!s||isSlotAbsent(s))&&cd.slots.some(s=>isSlotAbsent(s));
-        const locked=isDayLocked(date);hTd.innerHTML='';
-        if(locked)hTd.classList.add('locked-cell');else hTd.classList.remove('locked-cell');
-        const container=document.createElement('div');container.className='hour-slots-container';
-        cd.hours.forEach((h,idx)=>{const sd=cd.slots[idx],isAbs=isSlotAbsent(sd);const slot=document.createElement('div');let cls='hour-slot'+(cd.slots.length>1?' small':'');if(h>0&&!isAbs)cls+=' has-value';if(overtime&&h>0&&!isAbs&&!allAbsent)cls+=' overtime';if(isAbs)cls+=' absent-hour';slot.className=cls;slot.innerHTML=isAbs?formatHourHTML(0):(h>0?formatHourHTML(h):'');if(!locked){slot.addEventListener('mousedown',e=>{e.preventDefault();e.stopPropagation();if(e.button===0&&!isAbs&&cd.hours[idx]<MAX_H){cd.hours[idx]+=HALF;renderHourCell(hTd,row,date);updateFooter();autoSave();}});slot.addEventListener('contextmenu',e=>{e.preventDefault();e.stopPropagation();if(!isAbs&&cd.hours[idx]>MIN_H){cd.hours[idx]-=HALF;renderHourCell(hTd,row,date);updateFooter();autoSave();}});}container.appendChild(slot);});
-        hTd.appendChild(container);
-    }
-    function renderPosteCell(td,row,date){
-        const cd=getCell(row,date),locked=isDayLocked(date);td.innerHTML='';
-        if(locked)td.classList.add('locked-cell');else td.classList.remove('locked-cell');
-        const colIdx=parseInt(td.getAttribute('data-col'));
-        if(!locked){const controls=document.createElement('div');controls.className='cell-controls';const sB=document.createElement('button');sB.className='cell-ctrl-btn split-btn';sB.textContent='+';sB.addEventListener('mousedown',e=>{e.stopPropagation();e.preventDefault();splitCell(row,date,td);});const mB=document.createElement('button');mB.className='cell-ctrl-btn merge-btn';mB.textContent='−';mB.addEventListener('mousedown',e=>{e.stopPropagation();e.preventDefault();mergeCell(row,date,td);});controls.appendChild(sB);controls.appendChild(mB);td.appendChild(controls);}
-        const container=document.createElement('div');container.className='slots-container'+(cd.slots.length>1?' multi':'');
-        cd.slots.forEach((slot,idx)=>{const el=document.createElement('div');el.className='cell-slot';if(slot){const col=getToolColor(slot.tool);el.textContent=shortLabel(slot.tool);el.title=slot.tool;el.style.background=col.bg;el.style.color=col.fg;}else{el.classList.add('empty');el.textContent='·';}if(!locked){el.addEventListener('mousedown',e=>{e.stopPropagation();if(!currentTool){flashNoTool();return;}
-            if(fillMode&&currentTool!=='Effacer'){fillFromDay(row,date,idx);return;}
-            isPainting=true;paintSlotIndex=idx;applyToolToSlot(row,date,idx,td);});el.addEventListener('mouseenter',()=>{if(fillMode)return;if(!isPainting||!currentTool)return;applyToolToSlot(row,date,Math.min(paintSlotIndex,getCell(row,date).slots.length-1),td);});el.addEventListener('contextmenu',e=>{e.preventDefault();e.stopPropagation();clearSlot(row,date,idx,td);});}container.appendChild(el);});
-        td.appendChild(container);td.classList.remove('month-border-r','week-border-r');if(isLastDayOfMonth(colIdx))td.classList.add('month-border-r');else if(isLastDayOfWeek(colIdx))td.classList.add('week-border-r');
-    }
+    function applyColWidths(){const w=colWidths,lp=[0,w.entite,w.entite+w.nom,w.entite+w.nom+w.prenom],ws=[w.entite,w.nom,w.prenom,w.matricule],fs=['entite','nom','prenom','matricule'];fs.forEach((f,i)=>{document.querySelectorAll(`.ncol-${f}`).forEach(el=>{el.style.left=lp[i]+'px';el.style.minWidth=ws[i]+'px';el.style.width=ws[i]+'px';el.style.maxWidth=ws[i]+'px';});});const tw=totalNameWidth();document.querySelectorAll('.corner-main,.footer-cell,.footer-validate-label,.footer-edit-label').forEach(el=>{el.style.minWidth=tw+'px';el.style.width=tw+'px';el.style.maxWidth=tw+'px';});}
+    function buildHeader(){const thead=document.getElementById('tableHead');thead.innerHTML='';const todayKey=toLocalDateStr(new Date());const mR=document.createElement('tr');mR.className='hdr-months';const cornerTh=document.createElement('th');cornerTh.className='corner-main';cornerTh.rowSpan=3;cornerTh.colSpan=4;cornerTh.textContent='Compagnons';mR.appendChild(cornerTh);monthBoundaries.forEach(mb=>{const th=document.createElement('th');th.className='month-header month-border-r';th.colSpan=mb.count*2;th.textContent=MONTHS_FR[mb.month]+' '+mb.year;mR.appendChild(th);});thead.appendChild(mR);const wR=document.createElement('tr');wR.className='hdr-weeks';weekBoundaries.forEach(wb=>{const th=document.createElement('th');th.className='week-header';th.colSpan=wb.count*2;th.textContent='S'+wb.week;const li=wb.startIndex+wb.count-1;if(isLastDayOfMonth(li))th.classList.add('month-border-r');else th.classList.add('week-border-r');wR.appendChild(th);});thead.appendChild(wR);const dR=document.createElement('tr');dR.className='hdr-days';workingDays.forEach((wd,idx)=>{const th=document.createElement('th');th.className='day-header-group';th.colSpan=2;th.setAttribute('data-date',wd.key);if(wd.key===todayKey)th.classList.add('today');if(isLastDayOfMonth(idx))th.classList.add('month-border-r');else if(isLastDayOfWeek(idx))th.classList.add('week-border-r');th.textContent=DAYS_FR[wd.dow].charAt(0)+wd.day;th.title=DAYS_FR[wd.dow]+' '+wd.day+' '+MONTHS_FR[wd.month]+' '+wd.year;dR.appendChild(th);});thead.appendChild(dR);const sR=document.createElement('tr');sR.className='hdr-sub';[{label:'Entité',key:'entite'},{label:'Nom',key:'nom'},{label:'Prénom',key:'prenom'},{label:'Matricule',key:'matricule'}].forEach((sc,i)=>{const th=document.createElement('th');th.className='sub-header-name ncol-'+sc.key+(i===3?' last-name-col':'');th.textContent=sc.label;th.style.position='sticky';const handle=document.createElement('div');handle.className='col-resize-handle';let startX,startW;handle.addEventListener('mousedown',e=>{e.preventDefault();e.stopPropagation();startX=e.clientX;startW=colWidths[sc.key];const onMove=ev=>{colWidths[sc.key]=Math.max(40,startW+(ev.clientX-startX));applyColWidths();};const onUp=()=>{document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);};document.addEventListener('mousemove',onMove);document.addEventListener('mouseup',onUp);});th.appendChild(handle);sR.appendChild(th);});workingDays.forEach((wd,idx)=>{const tH=document.createElement('th');tH.className='sub-header sub-h';tH.textContent='H';sR.appendChild(tH);const tP=document.createElement('th');tP.className='sub-header sub-p';tP.textContent='Poste';if(isLastDayOfMonth(idx))tP.classList.add('month-border-r');else if(isLastDayOfWeek(idx))tP.classList.add('week-border-r');sR.appendChild(tP);});thead.appendChild(sR);applyColWidths();}
+    function renderHourCell(hTd,row,date){const cd=getCell(row,date),totalH=cd.hours.reduce((a,b)=>a+b,0),overtime=totalH>BASE_HOURS;const allAbsent=cd.slots.every(s=>!s||isSlotAbsent(s))&&cd.slots.some(s=>isSlotAbsent(s));const locked=isDayLocked(date);hTd.innerHTML='';if(locked)hTd.classList.add('locked-cell');else hTd.classList.remove('locked-cell');const container=document.createElement('div');container.className='hour-slots-container';cd.hours.forEach((h,idx)=>{const sd=cd.slots[idx],isAbs=isSlotAbsent(sd);const slot=document.createElement('div');let cls='hour-slot'+(cd.slots.length>1?' small':'');if(h>0&&!isAbs)cls+=' has-value';if(overtime&&h>0&&!isAbs&&!allAbsent)cls+=' overtime';if(isAbs)cls+=' absent-hour';slot.className=cls;slot.innerHTML=isAbs?formatHourHTML(0):(h>0?formatHourHTML(h):'');if(!locked){slot.addEventListener('mousedown',e=>{e.preventDefault();e.stopPropagation();if(e.button===0&&!isAbs&&cd.hours[idx]<MAX_H){cd.hours[idx]+=HALF;renderHourCell(hTd,row,date);updateFooter();autoSave();}});slot.addEventListener('contextmenu',e=>{e.preventDefault();e.stopPropagation();if(!isAbs&&cd.hours[idx]>MIN_H){cd.hours[idx]-=HALF;renderHourCell(hTd,row,date);updateFooter();autoSave();}});}container.appendChild(slot);});hTd.appendChild(container);}
+    function renderPosteCell(td,row,date){const cd=getCell(row,date),locked=isDayLocked(date);td.innerHTML='';if(locked)td.classList.add('locked-cell');else td.classList.remove('locked-cell');const colIdx=parseInt(td.getAttribute('data-col'));if(!locked){const controls=document.createElement('div');controls.className='cell-controls';const sB=document.createElement('button');sB.className='cell-ctrl-btn split-btn';sB.textContent='+';sB.addEventListener('mousedown',e=>{e.stopPropagation();e.preventDefault();splitCell(row,date,td);});const mB=document.createElement('button');mB.className='cell-ctrl-btn merge-btn';mB.textContent='−';mB.addEventListener('mousedown',e=>{e.stopPropagation();e.preventDefault();mergeCell(row,date,td);});controls.appendChild(sB);controls.appendChild(mB);td.appendChild(controls);}const container=document.createElement('div');container.className='slots-container'+(cd.slots.length>1?' multi':'');cd.slots.forEach((slot,idx)=>{const el=document.createElement('div');el.className='cell-slot';if(slot){const col=getToolColor(slot.tool);el.textContent=shortLabel(slot.tool);el.title=slot.tool;el.style.background=col.bg;el.style.color=col.fg;}else{el.classList.add('empty');el.textContent='·';}if(!locked){el.addEventListener('mousedown',e=>{e.stopPropagation();if(!currentTool){flashNoTool();return;}if(fillMode&&currentTool!=='Effacer'){fillFromDay(row,date,idx);return;}isPainting=true;paintSlotIndex=idx;applyToolToSlot(row,date,idx,td);});el.addEventListener('mouseenter',()=>{if(fillMode)return;if(!isPainting||!currentTool)return;applyToolToSlot(row,date,Math.min(paintSlotIndex,getCell(row,date).slots.length-1),td);});el.addEventListener('contextmenu',e=>{e.preventDefault();e.stopPropagation();clearSlot(row,date,idx,td);});}container.appendChild(el);});td.appendChild(container);td.classList.remove('month-border-r','week-border-r');if(isLastDayOfMonth(colIdx))td.classList.add('month-border-r');else if(isLastDayOfWeek(colIdx))td.classList.add('week-border-r');}
     function getHourTd(r,d){return document.querySelector(`td.hour-cell[data-row="${r}"][data-date="${d}"]`);}
     function refreshPair(r,d,td){const h=getHourTd(r,d);if(h)renderHourCell(h,r,d);renderPosteCell(td,r,d);updateFooter();autoSave();}
     function splitCell(r,d,td){const cd=getCell(r,d);if(cd.slots.length>=MAX_SLOTS)return;cd.slots.push(null);const hasWork=cd.slots.some(s=>s&&!isSlotAbsent(s));if(hasWork){const total=cd.hours.reduce((a,b)=>a+b,0)||BASE_HOURS;const n=cd.slots.length;cd.hours=cd.slots.map(()=>Math.round((total/n)*2)/2);let diff=Math.round((total-cd.hours.reduce((a,b)=>a+b,0))*2)/2;if(diff)cd.hours[0]+=diff;}else cd.hours.push(0);refreshPair(r,d,td);}
     function mergeCell(r,d,td){const cd=getCell(r,d);if(cd.slots.length<=1)return;cd.slots.pop();const hasWork=cd.slots.some(s=>s&&!isSlotAbsent(s));if(hasWork){const total=cd.hours.reduce((a,b)=>a+b,0);cd.hours.pop();const n=cd.slots.length;cd.hours=cd.slots.map(()=>Math.round((total/n)*2)/2);let diff=Math.round((total-cd.hours.reduce((a,b)=>a+b,0))*2)/2;if(diff)cd.hours[0]+=diff;}else cd.hours.pop();refreshPair(r,d,td);}
     function applyToolToSlot(r,d,idx,td){if(isDayLocked(d)){flashBlock('⚠ Jour validé. Cliquez sur ✏ pour déverrouiller.');return;}const cd=getCell(r,d);if(idx>=cd.slots.length)return;const hadWork=cd.slots.some(s=>s&&!isSlotAbsent(s));if(currentTool==='Effacer'){cd.slots[idx]=null;cd.hours[idx]=0;if(!cd.slots.some(s=>s!==null))cd.hours=new Array(cd.slots.length).fill(0);}else if(isAbsentTool(currentTool)){cd.slots[idx]={tool:currentTool,cat:getCatForTool(currentTool)};cd.hours[idx]=0;}else{cd.slots[idx]={tool:currentTool,cat:getCatForTool(currentTool)};if(!hadWork){const n=cd.slots.length;cd.hours=cd.slots.map(s=>(s&&!isSlotAbsent(s))?Math.round((BASE_HOURS/n)*2)/2:0);}else if(cd.hours[idx]===0){const filled=cd.slots.filter(s=>s&&!isSlotAbsent(s)).length;cd.hours[idx]=Math.round((BASE_HOURS/filled)*2)/2;}}refreshPair(r,d,td);}
-    function clearSlot(r,d,idx,td){if(isDayLocked(d)){flashBlock('⚠ Jour validé. Cliquez sur ✏ pour déverrouiller.');return;}const cd=getCell(r,d);if(idx>=cd.slots.length)return;cd.slots[idx]=null;cd.hours[idx]=0;if(!cd.slots.some(s=>s!==null))cd.hours=new Array(cd.slots.length).fill(0);refreshPair(r,d,td);}
+    function clearSlot(r,d,idx,td){if(isDayLocked(d)){flashBlock('⚠ Jour validé.');return;}const cd=getCell(r,d);if(idx>=cd.slots.length)return;cd.slots[idx]=null;cd.hours[idx]=0;if(!cd.slots.some(s=>s!==null))cd.hours=new Array(cd.slots.length).fill(0);refreshPair(r,d,td);}
     function lockDay(dk){lockedDays[dk]=true;for(let r=1;r<=rowCount;r++){const h=getHourTd(String(r),dk);if(h)renderHourCell(h,String(r),dk);const td=document.querySelector(`td.data-cell[data-row="${r}"][data-date="${dk}"]`);if(td)renderPosteCell(td,String(r),dk);}updateFooter();autoSave();}
     function unlockDay(dk){delete lockedDays[dk];for(let r=1;r<=rowCount;r++){const h=getHourTd(String(r),dk);if(h)renderHourCell(h,String(r),dk);const td=document.querySelector(`td.data-cell[data-row="${r}"][data-date="${dk}"]`);if(td)renderPosteCell(td,String(r),dk);}updateFooter();autoSave();}
-    function buildFooter(){
-        const tfoot=document.getElementById('tableFoot');tfoot.innerHTML='';
-        const tr=document.createElement('tr');const lbl=document.createElement('td');lbl.className='footer-cell';lbl.colSpan=4;lbl.textContent='Total';tr.appendChild(lbl);
-        workingDays.forEach((wd,idx)=>{const hT=document.createElement('td');hT.className='footer-hour';hT.setAttribute('data-date',wd.key);tr.appendChild(hT);const cT=document.createElement('td');cT.className='footer-count';cT.setAttribute('data-date',wd.key);if(isLastDayOfMonth(idx))cT.classList.add('month-border-r');else if(isLastDayOfWeek(idx))cT.classList.add('week-border-r');tr.appendChild(cT);});tfoot.appendChild(tr);
-        const tr2=document.createElement('tr');const lbl2=document.createElement('td');lbl2.className='footer-validate-label';lbl2.colSpan=4;lbl2.textContent='';tr2.appendChild(lbl2);
-        workingDays.forEach((wd,idx)=>{const vTd=document.createElement('td');vTd.className='footer-validate';vTd.colSpan=2;vTd.setAttribute('data-date',wd.key);if(isLastDayOfMonth(idx))vTd.classList.add('month-border-r');else if(isLastDayOfWeek(idx))vTd.classList.add('week-border-r');tr2.appendChild(vTd);});tfoot.appendChild(tr2);
-        const tr3=document.createElement('tr');const lbl3=document.createElement('td');lbl3.className='footer-edit-label';lbl3.colSpan=4;lbl3.textContent='';tr3.appendChild(lbl3);
-        workingDays.forEach((wd,idx)=>{const eTd=document.createElement('td');eTd.className='footer-edit';eTd.colSpan=2;eTd.setAttribute('data-date',wd.key);if(isLastDayOfMonth(idx))eTd.classList.add('month-border-r');else if(isLastDayOfWeek(idx))eTd.classList.add('week-border-r');tr3.appendChild(eTd);});tfoot.appendChild(tr3);
-        updateFooter();applyColWidths();
-    }
-    function updateFooter(){
-        workingDays.forEach(wd=>{
-            let totalH=0,count=0;for(let r=1;r<=rowCount;r++){const cd=getCell(String(r),wd.key);const dayH=cd.hours.reduce((a,b)=>a+b,0);const has=cd.slots.some(s=>s!==null);const allAbs=has&&cd.slots.filter(s=>s!==null).every(s=>isSlotAbsent(s));if(has&&!allAbs){count++;totalH+=dayH;}}
-            const hTd=document.querySelector(`td.footer-hour[data-date="${wd.key}"]`);const cTd=document.querySelector(`td.footer-count[data-date="${wd.key}"]`);const vTd=document.querySelector(`td.footer-validate[data-date="${wd.key}"]`);const eTd=document.querySelector(`td.footer-edit[data-date="${wd.key}"]`);const dayH=document.querySelector(`th.day-header-group[data-date="${wd.key}"]`);
-            const hasPoste=dayHasAnyPoste(wd.key),locked=isDayLocked(wd.key);
-            if(hTd){hTd.classList.remove('hl-orange','hl-green');if(totalH>0){const hrs=Math.floor(totalH),mins=Math.round((totalH-hrs)*60);hTd.innerHTML='<span style="font-weight:800;">'+hrs+'</span><span style="font-size:0.5rem;position:relative;top:-0.2em;">h</span>'+(mins>0?'<span style="font-size:0.52rem;position:relative;top:-0.15em;">'+String(mins).padStart(2,'0')+'</span>':'');}else hTd.textContent='';}
-            if(cTd){cTd.classList.remove('hl-orange','hl-green');if(count>0)cTd.innerHTML='<span style="font-weight:800;">'+count+'</span><span style="font-weight:800;">Ω</span>';else cTd.textContent='';}
-            if(dayH)dayH.classList.remove('hl-orange','hl-green');
-            if(hasPoste){if(locked){if(hTd)hTd.classList.add('hl-green');if(cTd)cTd.classList.add('hl-green');if(dayH&&!dayH.classList.contains('today'))dayH.classList.add('hl-green');}else{if(hTd)hTd.classList.add('hl-orange');if(cTd)cTd.classList.add('hl-orange');if(dayH&&!dayH.classList.contains('today'))dayH.classList.add('hl-orange');}}
-            if(vTd){vTd.innerHTML='';if(hasPoste){const btn=document.createElement('div');btn.className='v-circle';btn.innerHTML='✓';if(locked){btn.classList.add('green');btn.style.cursor='default';btn.title='Validé';}else{btn.classList.add('orange');btn.title='Valider ce jour';btn.addEventListener('click',()=>lockDay(wd.key));}vTd.appendChild(btn);}}
-            if(eTd){eTd.innerHTML='';if(hasPoste&&locked){const btn=document.createElement('div');btn.className='v-circle orange';btn.innerHTML='✏';btn.title='Modifier ce jour';btn.addEventListener('click',()=>unlockDay(wd.key));eTd.appendChild(btn);}}
-        });
-    }
-    function addRow(){
-        rowCount++;const tbody=document.getElementById('tableBody'),tr=document.createElement('tr');
-        const todayKey=toLocalDateStr(new Date()),r=String(rowCount);
-        [{key:'entite',ph:'',def:'ECE',fmt:null},{key:'nom',ph:'NOM',def:'',fmt:v=>v.toUpperCase()},{key:'prenom',ph:'Prénom',def:'',fmt:v=>v.length?v.charAt(0).toUpperCase()+v.slice(1).toLowerCase():''},{key:'matricule',ph:'Matricule',def:'',fmt:null}].forEach((f,i)=>{
-            const td=document.createElement('td');td.className='name-col ncol-'+f.key+(i===3?' last-name-col':'');
-            const inp=document.createElement('input');inp.type='text';inp.placeholder=f.ph;inp.value=f.def;
-            inp.setAttribute('data-row',r);inp.setAttribute('data-field',f.key);
-            if(f.fmt)inp.addEventListener('input',function(){this.value=f.fmt(this.value);});
-            inp.addEventListener('change',()=>autoSave());
-            td.appendChild(inp);tr.appendChild(td);
-        });
-        workingDays.forEach((wd,ci)=>{
-            const hTd=document.createElement('td');hTd.className='hour-cell';if(wd.key===todayKey)hTd.classList.add('today-col');hTd.setAttribute('data-row',r);hTd.setAttribute('data-date',wd.key);renderHourCell(hTd,r,wd.key);tr.appendChild(hTd);
-            const td=document.createElement('td');td.className='data-cell';if(wd.key===todayKey)td.classList.add('today-col');td.setAttribute('data-row',r);td.setAttribute('data-col',ci);td.setAttribute('data-date',wd.key);
-            td.addEventListener('mouseenter',()=>{if(fillMode)return;if(!isPainting||!currentTool)return;applyToolToSlot(r,wd.key,Math.min(paintSlotIndex,getCell(r,wd.key).slots.length-1),td);});
-            td.addEventListener('contextmenu',e=>e.preventDefault());renderPosteCell(td,r,wd.key);tr.appendChild(td);
-        });
-        tbody.appendChild(tr);buildFooter();applyColWidths();
-    }
+    function buildFooter(){const tfoot=document.getElementById('tableFoot');tfoot.innerHTML='';const tr=document.createElement('tr');const lbl=document.createElement('td');lbl.className='footer-cell';lbl.colSpan=4;lbl.textContent='Total';tr.appendChild(lbl);workingDays.forEach((wd,idx)=>{const hT=document.createElement('td');hT.className='footer-hour';hT.setAttribute('data-date',wd.key);tr.appendChild(hT);const cT=document.createElement('td');cT.className='footer-count';cT.setAttribute('data-date',wd.key);if(isLastDayOfMonth(idx))cT.classList.add('month-border-r');else if(isLastDayOfWeek(idx))cT.classList.add('week-border-r');tr.appendChild(cT);});tfoot.appendChild(tr);const tr2=document.createElement('tr');const lbl2=document.createElement('td');lbl2.className='footer-validate-label';lbl2.colSpan=4;lbl2.textContent='';tr2.appendChild(lbl2);workingDays.forEach((wd,idx)=>{const vTd=document.createElement('td');vTd.className='footer-validate';vTd.colSpan=2;vTd.setAttribute('data-date',wd.key);if(isLastDayOfMonth(idx))vTd.classList.add('month-border-r');else if(isLastDayOfWeek(idx))vTd.classList.add('week-border-r');tr2.appendChild(vTd);});tfoot.appendChild(tr2);const tr3=document.createElement('tr');const lbl3=document.createElement('td');lbl3.className='footer-edit-label';lbl3.colSpan=4;lbl3.textContent='';tr3.appendChild(lbl3);workingDays.forEach((wd,idx)=>{const eTd=document.createElement('td');eTd.className='footer-edit';eTd.colSpan=2;eTd.setAttribute('data-date',wd.key);if(isLastDayOfMonth(idx))eTd.classList.add('month-border-r');else if(isLastDayOfWeek(idx))eTd.classList.add('week-border-r');tr3.appendChild(eTd);});tfoot.appendChild(tr3);updateFooter();applyColWidths();}
+    function updateFooter(){workingDays.forEach(wd=>{let totalH=0,count=0;for(let r=1;r<=rowCount;r++){const cd=getCell(String(r),wd.key);const dayH=cd.hours.reduce((a,b)=>a+b,0);const has=cd.slots.some(s=>s!==null);const allAbs=has&&cd.slots.filter(s=>s!==null).every(s=>isSlotAbsent(s));if(has&&!allAbs){count++;totalH+=dayH;}}const hTd=document.querySelector(`td.footer-hour[data-date="${wd.key}"]`);const cTd=document.querySelector(`td.footer-count[data-date="${wd.key}"]`);const vTd=document.querySelector(`td.footer-validate[data-date="${wd.key}"]`);const eTd=document.querySelector(`td.footer-edit[data-date="${wd.key}"]`);const dayH=document.querySelector(`th.day-header-group[data-date="${wd.key}"]`);const hasPoste=dayHasAnyPoste(wd.key),locked=isDayLocked(wd.key);if(hTd){hTd.classList.remove('hl-orange','hl-green');if(totalH>0){const hrs=Math.floor(totalH),mins=Math.round((totalH-hrs)*60);hTd.innerHTML='<span style="font-weight:800;">'+hrs+'</span><span style="font-size:0.5rem;position:relative;top:-0.2em;">h</span>'+(mins>0?'<span style="font-size:0.52rem;position:relative;top:-0.15em;">'+String(mins).padStart(2,'0')+'</span>':'');}else hTd.textContent='';}if(cTd){cTd.classList.remove('hl-orange','hl-green');if(count>0)cTd.innerHTML='<span style="font-weight:800;">'+count+'</span><span style="font-weight:800;">Ω</span>';else cTd.textContent='';}if(dayH)dayH.classList.remove('hl-orange','hl-green');if(hasPoste){if(locked){if(hTd)hTd.classList.add('hl-green');if(cTd)cTd.classList.add('hl-green');if(dayH&&!dayH.classList.contains('today'))dayH.classList.add('hl-green');}else{if(hTd)hTd.classList.add('hl-orange');if(cTd)cTd.classList.add('hl-orange');if(dayH&&!dayH.classList.contains('today'))dayH.classList.add('hl-orange');}}if(vTd){vTd.innerHTML='';if(hasPoste){const btn=document.createElement('div');btn.className='v-circle';btn.innerHTML='✓';if(locked){btn.classList.add('green');btn.style.cursor='default';btn.title='Validé';}else{btn.classList.add('orange');btn.title='Valider';btn.addEventListener('click',()=>lockDay(wd.key));}vTd.appendChild(btn);}}if(eTd){eTd.innerHTML='';if(hasPoste&&locked){const btn=document.createElement('div');btn.className='v-circle orange';btn.innerHTML='✏';btn.title='Modifier';btn.addEventListener('click',()=>unlockDay(wd.key));eTd.appendChild(btn);}}});}
+    function addRow(){rowCount++;const tbody=document.getElementById('tableBody'),tr=document.createElement('tr');const todayKey=toLocalDateStr(new Date()),r=String(rowCount);[{key:'entite',ph:'',def:'ECE',fmt:null},{key:'nom',ph:'NOM',def:'',fmt:v=>v.toUpperCase()},{key:'prenom',ph:'Prénom',def:'',fmt:v=>v.length?v.charAt(0).toUpperCase()+v.slice(1).toLowerCase():''},{key:'matricule',ph:'Matricule',def:'',fmt:null}].forEach((f,i)=>{const td=document.createElement('td');td.className='name-col ncol-'+f.key+(i===3?' last-name-col':'');const inp=document.createElement('input');inp.type='text';inp.placeholder=f.ph;inp.value=f.def;inp.setAttribute('data-row',r);inp.setAttribute('data-field',f.key);if(f.fmt)inp.addEventListener('input',function(){this.value=f.fmt(this.value);});inp.addEventListener('change',()=>autoSave());td.appendChild(inp);tr.appendChild(td);});workingDays.forEach((wd,ci)=>{const hTd=document.createElement('td');hTd.className='hour-cell';if(wd.key===todayKey)hTd.classList.add('today-col');hTd.setAttribute('data-row',r);hTd.setAttribute('data-date',wd.key);renderHourCell(hTd,r,wd.key);tr.appendChild(hTd);const td=document.createElement('td');td.className='data-cell';if(wd.key===todayKey)td.classList.add('today-col');td.setAttribute('data-row',r);td.setAttribute('data-col',ci);td.setAttribute('data-date',wd.key);td.addEventListener('mouseenter',()=>{if(fillMode)return;if(!isPainting||!currentTool)return;applyToolToSlot(r,wd.key,Math.min(paintSlotIndex,getCell(r,wd.key).slots.length-1),td);});td.addEventListener('contextmenu',e=>e.preventDefault());renderPosteCell(td,r,wd.key);tr.appendChild(td);});tbody.appendChild(tr);buildFooter();applyColWidths();}
     function removeLastRow(){const tbody=document.getElementById('tableBody');if(tbody.lastChild){tbody.removeChild(tbody.lastChild);for(const k of Object.keys(cellData)){if(k.startsWith(rowCount+'_'))delete cellData[k];}rowCount=Math.max(0,rowCount-1);buildFooter();autoSave();}}
     document.addEventListener('mouseup',()=>{isPainting=false;});
     function flashNoTool(){const m=document.getElementById('noToolMsg');m.classList.add('show');clearTimeout(noToolTimeout);noToolTimeout=setTimeout(()=>m.classList.remove('show'),1500);}
@@ -826,6 +650,7 @@
     function selectTool(tool){if(currentTool===tool){currentTool=null;document.getElementById('currentToolLabel').textContent='Aucun — sélectionnez un poste ci-dessus';}else{currentTool=tool;document.getElementById('currentToolLabel').textContent=tool;}renderRibbon();}
     function switchPage(name){
         if(name==='ventilation')rebuildTable();
+        if(name==='bilan')buildBilan();
         document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
         document.querySelectorAll('.main-tab:not(.home-btn)').forEach(t=>t.classList.remove('active'));
         document.getElementById('page-'+name).classList.add('active');
@@ -836,32 +661,208 @@
     function showParamSub(sub){currentParamSub=sub;document.querySelectorAll('.param-sub-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.param-sub-content').forEach(c=>c.classList.remove('active'));document.querySelector(`.param-sub-tab[onclick*="${sub}"]`).classList.add('active');document.getElementById('paramSub-'+sub).classList.add('active');if(sub==='postes')renderParamPostes();else renderParamDates();}
     function renderParamPostes(){const c=document.getElementById('paramContent');c.innerHTML='';for(const[cat,tools]of Object.entries(CATEGORIES)){const sec=document.createElement('div');sec.className='param-category';const title=document.createElement('div');title.className='param-cat-title '+cat;title.textContent=CAT_LABELS[cat];sec.appendChild(title);const td=document.createElement('div');td.className='param-tools';tools.forEach(tool=>{const col=getToolColor(tool);const el=document.createElement('div');el.className='param-tool'+(enabledTools[tool]?' enabled':' disabled');el.textContent=tool;if(enabledTools[tool]){el.style.background=col.bg;el.style.color=col.fg;el.style.borderColor=col.bg;}el.addEventListener('click',()=>{if(enabledTools[tool]){if(isToolUsedInPlanning(tool)){flashBlock('⚠ Impossible de désactiver « '+tool+' ».');return;}enabledTools[tool]=false;}else enabledTools[tool]=true;renderParamPostes();autoSave();});td.appendChild(el);});sec.appendChild(td);c.appendChild(sec);}}
     function enableAllTools(){for(const t of Object.keys(enabledTools))enabledTools[t]=true;renderParamPostes();autoSave();}
-    function disableAllTools(){let b=[];for(const t of Object.keys(enabledTools)){if(isToolUsedInPlanning(t)){b.push(t);continue;}enabledTools[t]=false;}renderParamPostes();autoSave();if(b.length)flashBlock('⚠ Non désactivés car pointés : '+b.join(', '));}
+    function disableAllTools(){let b=[];for(const t of Object.keys(enabledTools)){if(isToolUsedInPlanning(t)){b.push(t);continue;}enabledTools[t]=false;}renderParamPostes();autoSave();if(b.length)flashBlock('⚠ Non désactivés : '+b.join(', '));}
     function renderParamDates(){const c=document.getElementById('paramDatesContent');c.innerHTML='';for(let y=GLOBAL_START_YEAR;y<=GLOBAL_END_YEAR;y++){const sec=document.createElement('div');sec.className='date-year-section';const title=document.createElement('div');title.className='date-year-title';title.textContent=y;sec.appendChild(title);const grid=document.createElement('div');grid.className='date-months-grid';for(let m=0;m<12;m++){const key=monthKey(y,m);const btn=document.createElement('div');btn.className='date-month-btn';btn.textContent=MONTHS_SHORT[m];btn.classList.add(enabledMonths[key]?'enabled':'disabled');btn.addEventListener('click',()=>{if(enabledMonths[key]){if(isMonthHasData(y,m)){flashBlock('⚠ Impossible : postes pointés sur '+MONTHS_FR[m]+' '+y);return;}enabledMonths[key]=false;}else enabledMonths[key]=true;renderParamDates();autoSave();});grid.appendChild(btn);}sec.appendChild(grid);c.appendChild(sec);}}
     function enableAllMonths(){for(const k of Object.keys(enabledMonths))enabledMonths[k]=true;renderParamDates();autoSave();}
     function disableAllMonths(){let bl=[];for(let y=GLOBAL_START_YEAR;y<=GLOBAL_END_YEAR;y++)for(let m=0;m<12;m++){const key=monthKey(y,m);if(!enabledMonths[key])continue;if(isMonthHasData(y,m)){bl.push(MONTHS_SHORT[m]+' '+y);continue;}enabledMonths[key]=false;}renderParamDates();autoSave();if(bl.length)flashBlock('⚠ Non désactivés : '+bl.join(', '));}
-    function rebuildTable(){
-        const sd={};document.querySelectorAll('input[data-field]').forEach(inp=>{const row=inp.getAttribute('data-row'),field=inp.getAttribute('data-field');if(!sd[row])sd[row]={};sd[row][field]=inp.value;});
-        const sRC=rowCount;generateWorkingDays();buildHeader();
-        document.getElementById('tableBody').innerHTML='';rowCount=0;
-        for(let i=0;i<sRC;i++)addRow();
-        Object.entries(sd).forEach(([row,fields])=>{Object.entries(fields).forEach(([field,value])=>{const inp=document.querySelector(`input[data-row="${row}"][data-field="${field}"]`);if(inp)inp.value=value;});});
-        buildFooter();
-    }
+    function rebuildTable(){const sd={};document.querySelectorAll('input[data-field]').forEach(inp=>{const row=inp.getAttribute('data-row'),field=inp.getAttribute('data-field');if(!sd[row])sd[row]={};sd[row][field]=inp.value;});const sRC=rowCount;generateWorkingDays();buildHeader();document.getElementById('tableBody').innerHTML='';rowCount=0;for(let i=0;i<sRC;i++)addRow();Object.entries(sd).forEach(([row,fields])=>{Object.entries(fields).forEach(([field,value])=>{const inp=document.querySelector(`input[data-row="${row}"][data-field="${field}"]`);if(inp)inp.value=value;});});buildFooter();}
     function clearAll(){if(!confirm('Effacer toutes les données ?'))return;cellData={};lockedDays={};document.querySelectorAll('td.data-cell').forEach(td=>renderPosteCell(td,td.getAttribute('data-row'),td.getAttribute('data-date')));document.querySelectorAll('td.hour-cell').forEach(td=>renderHourCell(td,td.getAttribute('data-row'),td.getAttribute('data-date')));updateFooter();autoSave();}
-    function gatherSaveData(){
-        const data={cells:{},rowCount,enabledTools,enabledMonths,lockedDays,colWidths,version:'v18_multiproject',fields:{}};
-        // Ne sauvegarder que les cellules avec des données
-        for(const[k,v]of Object.entries(cellData)){if(v&&v.slots&&v.slots.some(s=>s!==null))data.cells[k]=v;}
-        document.querySelectorAll('input[data-field]').forEach(inp=>{const row=inp.getAttribute('data-row'),field=inp.getAttribute('data-field');if(!data.fields[row])data.fields[row]={};data.fields[row][field]=inp.value;});
-        return data;
-    }
+    function gatherSaveData(){const data={cells:{},rowCount,enabledTools,enabledMonths,lockedDays,colWidths,version:'v19',fields:{}};for(const[k,v]of Object.entries(cellData)){if(v&&v.slots&&v.slots.some(s=>s!==null))data.cells[k]=v;}document.querySelectorAll('input[data-field]').forEach(inp=>{const row=inp.getAttribute('data-row'),field=inp.getAttribute('data-field');if(!data.fields[row])data.fields[row]={};data.fields[row][field]=inp.value;});return data;}
     function scrollToMonth(dir){currentMonthIndex=Math.max(0,Math.min(monthBoundaries.length-1,currentMonthIndex+dir));scrollToMonthIndex(currentMonthIndex);}
     function scrollToMonthIndex(idx){const mb=monthBoundaries[idx];if(!mb)return;currentMonthIndex=idx;document.getElementById('monthLabel').textContent=MONTHS_FR[mb.month]+' '+mb.year;const wrapper=document.getElementById('tableWrapper');const target=wrapper.querySelector(`td.hour-cell[data-date="${workingDays[mb.startIndex].key}"]`);if(target)wrapper.scrollLeft=target.offsetLeft-totalNameWidth()-20;}
-    function scrollToToday(){const todayKey=toLocalDateStr(new Date());const wrapper=document.getElementById('tableWrapper');const target=wrapper.querySelector(`td.hour-cell[data-date="${todayKey}"]`);if(target){wrapper.scrollLeft=target.offsetLeft-totalNameWidth()-100;const today=new Date();monthBoundaries.forEach((mb,idx)=>{if(mb.month===today.getMonth()&&mb.year===today.getFullYear()){currentMonthIndex=idx;document.getElementById('monthLabel').textContent=MONTHS_FR[mb.month]+' '+mb.year;}});}else flashBlock("⚠ Aujourd'hui n'est pas un jour ouvré visible.");}
+    function scrollToToday(){const todayKey=toLocalDateStr(new Date());const wrapper=document.getElementById('tableWrapper');const target=wrapper.querySelector(`td.hour-cell[data-date="${todayKey}"]`);if(target){wrapper.scrollLeft=target.offsetLeft-totalNameWidth()-100;const today=new Date();monthBoundaries.forEach((mb,idx)=>{if(mb.month===today.getMonth()&&mb.year===today.getFullYear()){currentMonthIndex=idx;document.getElementById('monthLabel').textContent=MONTHS_FR[mb.month]+' '+mb.year;}});}else flashBlock("⚠ Aujourd'hui n'est pas visible.");}
 
-    document.getElementById('newProjectName').addEventListener('keydown',e=>{if(e.key==='Enter')confirmNewProject();});
-    function init(){loadProjectsList();}
+    // ====== BILAN ======
+    function computeBilanData() {
+        // Pour chaque jour et chaque outil: total heures + set de compagnons
+        // Retourne: { tool: { dateKey: { hours, workers: Set } } }
+        const data = {};
+        for (let r = 1; r <= rowCount; r++) {
+            const rs = String(r);
+            workingDays.forEach(wd => {
+                const cd = getCell(rs, wd.key);
+                cd.slots.forEach((s, idx) => {
+                    if (!s || isAbsentTool(s.tool)) return;
+                    const h = cd.hours[idx] || 0;
+                    if (h <= 0) return;
+                    if (!data[s.tool]) data[s.tool] = {};
+                    if (!data[s.tool][wd.key]) data[s.tool][wd.key] = { hours: 0, workers: new Set() };
+                    data[s.tool][wd.key].hours += h;
+                    data[s.tool][wd.key].workers.add(r);
+                });
+            });
+        }
+        return data;
+    }
+
+    function formatBilanH(h) {
+        if (!h || h === 0) return '';
+        const hrs = Math.floor(h), mins = Math.round((h - hrs) * 60);
+        return hrs + 'h' + (mins > 0 ? String(mins).padStart(2, '0') : '');
+    }
+
+    function buildBilan() {
+        const thead = document.getElementById('bilanHead');
+        const tbody = document.getElementById('bilanBody');
+        thead.innerHTML = ''; tbody.innerHTML = '';
+        if (!workingDays.length) return;
+        const todayKey = toLocalDateStr(new Date());
+        const bilanData = computeBilanData();
+
+        // Determine which tools have data
+        const usedTools = new Set(Object.keys(bilanData));
+
+        // Header row 1: months
+        const mR = document.createElement('tr'); mR.className = 'hdr-months';
+        const corner = document.createElement('th'); corner.className = 'bilan-corner';
+        corner.rowSpan = 3; corner.textContent = 'Postes'; mR.appendChild(corner);
+        monthBoundaries.forEach(mb => {
+            const th = document.createElement('th'); th.className = 'month-header month-border-r';
+            th.colSpan = mb.count; th.textContent = MONTHS_FR[mb.month] + ' ' + mb.year;
+            mR.appendChild(th);
+        }); thead.appendChild(mR);
+
+        // Header row 2: weeks
+        const wR = document.createElement('tr'); wR.className = 'hdr-weeks';
+        weekBoundaries.forEach(wb => {
+            const th = document.createElement('th'); th.className = 'week-header';
+            th.colSpan = wb.count; th.textContent = 'S' + wb.week;
+            const li = wb.startIndex + wb.count - 1;
+            if (isLastDayOfMonth(li)) th.classList.add('month-border-r');
+            else th.classList.add('week-border-r');
+            wR.appendChild(th);
+        }); thead.appendChild(wR);
+
+        // Header row 3: days
+        const dR = document.createElement('tr'); dR.className = 'hdr-days';
+        workingDays.forEach((wd, idx) => {
+            const th = document.createElement('th'); th.className = 'bilan-day-header';
+            if (wd.key === todayKey) th.classList.add('today');
+            if (isLastDayOfMonth(idx)) th.classList.add('month-border-r');
+            else if (isLastDayOfWeek(idx)) th.classList.add('week-border-r');
+            th.textContent = DAYS_FR[wd.dow].charAt(0) + wd.day;
+            th.title = DAYS_FR[wd.dow] + ' ' + wd.day + ' ' + MONTHS_FR[wd.month] + ' ' + wd.year;
+            dR.appendChild(th);
+        }); thead.appendChild(dR);
+
+        // Grand total accumulators
+        const grandTotal = {};
+        workingDays.forEach(wd => { grandTotal[wd.key] = { hours: 0, workers: new Set() }; });
+
+        // Body: one section per category
+        for (const [cat, tools] of Object.entries(CATEGORIES)) {
+            // Filter to tools that have data
+            const activeTools = tools.filter(t => usedTools.has(t));
+            if (!activeTools.length) continue;
+
+            // Compute category totals per day
+            const catTotals = {};
+            workingDays.forEach(wd => { catTotals[wd.key] = { hours: 0, workers: new Set() }; });
+            activeTools.forEach(tool => {
+                workingDays.forEach(wd => {
+                    const td = bilanData[tool] && bilanData[tool][wd.key];
+                    if (td) {
+                        catTotals[wd.key].hours += td.hours;
+                        td.workers.forEach(w => catTotals[wd.key].workers.add(w));
+                        grandTotal[wd.key].hours += td.hours;
+                        td.workers.forEach(w => grandTotal[wd.key].workers.add(w));
+                    }
+                });
+            });
+
+            // Category header row
+            const catRow = document.createElement('tr'); catRow.className = 'bilan-cat-row';
+            const catLabel = document.createElement('td');
+            catLabel.className = 'bilan-cat-label bilan-cat-' + cat;
+            catLabel.textContent = CAT_LABELS[cat]; catRow.appendChild(catLabel);
+            workingDays.forEach((wd, idx) => {
+                const td = document.createElement('td');
+                td.className = 'bilan-day-cell bilan-cat-' + cat;
+                const ct = catTotals[wd.key];
+                if (ct.hours > 0) {
+                    td.innerHTML = '<span class="bilan-h">' + formatBilanH(ct.hours) + '</span><br><span class="bilan-c">' + ct.workers.size + 'Ω</span>';
+                }
+                if (isLastDayOfMonth(idx)) td.classList.add('month-border-r');
+                else if (isLastDayOfWeek(idx)) td.classList.add('week-border-r');
+                catRow.appendChild(td);
+            });
+            tbody.appendChild(catRow);
+
+            // Tool rows
+            activeTools.forEach(tool => {
+                const toolRow = document.createElement('tr');
+                const toolLabel = document.createElement('td');
+                toolLabel.className = 'bilan-tool-label';
+                const col = getToolColor(tool);
+                toolLabel.innerHTML = '<span style="display:inline-block;width:10px;height:10px;border-radius:3px;background:' + col.bg + ';margin-right:6px;vertical-align:middle;"></span>' + tool;
+                toolRow.appendChild(toolLabel);
+                workingDays.forEach((wd, idx) => {
+                    const td = document.createElement('td');
+                    td.className = 'bilan-day-cell';
+                    const toolDay = bilanData[tool] && bilanData[tool][wd.key];
+                    if (toolDay && toolDay.hours > 0) {
+                        td.innerHTML = '<span class="bilan-h">' + formatBilanH(toolDay.hours) + '</span><br><span class="bilan-c">' + toolDay.workers.size + 'Ω</span>';
+                    }
+                    if (isLastDayOfMonth(idx)) td.classList.add('month-border-r');
+                    else if (isLastDayOfWeek(idx)) td.classList.add('week-border-r');
+                    toolRow.appendChild(td);
+                });
+                tbody.appendChild(toolRow);
+            });
+        }
+
+        // Grand total row
+        const totalRow = document.createElement('tr'); totalRow.className = 'bilan-total-row';
+        const totalLabel = document.createElement('td');
+        totalLabel.className = 'bilan-total-label'; totalLabel.textContent = 'TOTAL GÉNÉRAL';
+        totalRow.appendChild(totalLabel);
+        workingDays.forEach((wd, idx) => {
+            const td = document.createElement('td');
+            td.className = 'bilan-day-cell';
+            td.style.background = '#f0f0f0';
+            const gt = grandTotal[wd.key];
+            if (gt.hours > 0) {
+                td.innerHTML = '<span class="bilan-h" style="font-size:0.72rem;">' + formatBilanH(gt.hours) + '</span><br><span class="bilan-c" style="font-size:0.62rem;color:#c62828;font-weight:800;">' + gt.workers.size + 'Ω</span>';
+            }
+            if (isLastDayOfMonth(idx)) td.classList.add('month-border-r');
+            else if (isLastDayOfWeek(idx)) td.classList.add('week-border-r');
+            totalRow.appendChild(td);
+        });
+        tbody.appendChild(totalRow);
+
+        // Set month label
+        if (monthBoundaries.length) {
+            if (bilanMonthIndex >= monthBoundaries.length) bilanMonthIndex = 0;
+            document.getElementById('monthLabelB').textContent = MONTHS_FR[monthBoundaries[bilanMonthIndex].month] + ' ' + monthBoundaries[bilanMonthIndex].year;
+        }
+    }
+
+    function scrollToMonthB(dir) {
+        bilanMonthIndex = Math.max(0, Math.min(monthBoundaries.length - 1, bilanMonthIndex + dir));
+        const mb = monthBoundaries[bilanMonthIndex]; if (!mb) return;
+        document.getElementById('monthLabelB').textContent = MONTHS_FR[mb.month] + ' ' + mb.year;
+        const wrapper = document.getElementById('bilanTableWrapper');
+        const cells = wrapper.querySelectorAll('.bilan-day-header');
+        if (cells[mb.startIndex]) wrapper.scrollLeft = cells[mb.startIndex].offsetLeft - 220;
+    }
+    function scrollToTodayB() {
+        const todayKey = toLocalDateStr(new Date());
+        const wrapper = document.getElementById('bilanTableWrapper');
+        const target = wrapper.querySelector(`.bilan-day-header.today`);
+        if (target) {
+            wrapper.scrollLeft = target.offsetLeft - 300;
+            const today = new Date();
+            monthBoundaries.forEach((mb, idx) => {
+                if (mb.month === today.getMonth() && mb.year === today.getFullYear()) {
+                    bilanMonthIndex = idx;
+                    document.getElementById('monthLabelB').textContent = MONTHS_FR[mb.month] + ' ' + mb.year;
+                }
+            });
+        } else flashBlock("⚠ Aujourd'hui n'est pas visible.");
+    }
+
+    document.getElementById('newProjectName').addEventListener('keydown', e => { if (e.key === 'Enter') confirmNewProject(); });
+    function init() { loadProjectsList(); }
     init();
     </script>
 </body>
