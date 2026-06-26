@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attribution Chantiers</title>
-    <!-- 🔥 FIREBASE : scripts Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
     <style>
@@ -15,6 +14,85 @@
             overflow: hidden; height: 100vh;
             display: flex; flex-direction: column;
         }
+
+        /* ====== PAGE ACCUEIL (sélection de chantier/projet) ====== */
+        .home-page {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; flex: 1; background: #f5f7fa;
+            overflow-y: auto; padding: 40px 20px;
+        }
+        .home-page.hidden { display: none; }
+        .home-title {
+            font-size: 2rem; font-weight: 800; color: #1565c0;
+            margin-bottom: 8px; letter-spacing: 1px;
+        }
+        .home-subtitle {
+            font-size: 1rem; color: #666; margin-bottom: 40px;
+        }
+        .home-grid {
+            display: flex; flex-wrap: wrap; gap: 20px;
+            justify-content: center; max-width: 900px; margin-bottom: 40px;
+        }
+        .home-card {
+            width: 220px; min-height: 140px; border-radius: 14px;
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; cursor: pointer;
+            background: #fff; border: 2.5px solid #e0e0e0;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            transition: all 0.2s ease; padding: 24px 16px; text-align: center;
+        }
+        .home-card:hover {
+            transform: translateY(-4px); box-shadow: 0 8px 28px rgba(21,101,192,0.13);
+            border-color: #1565c0;
+        }
+        .home-card .card-icon { font-size: 2.5rem; margin-bottom: 10px; }
+        .home-card .card-name { font-size: 1.05rem; font-weight: 700; color: #222; }
+        .home-card .card-date { font-size: 0.72rem; color: #999; margin-top: 6px; }
+        .home-card.add-new {
+            border: 2.5px dashed #bbb; background: #fafafa; color: #999;
+        }
+        .home-card.add-new:hover { border-color: #1565c0; color: #1565c0; }
+        .home-card.add-new .card-icon { font-size: 2.2rem; }
+        .home-card.add-new .card-name { font-weight: 600; }
+
+        .home-card .card-delete {
+            margin-top: 10px; font-size: 0.7rem; color: #c62828;
+            cursor: pointer; opacity: 0; transition: opacity 0.15s;
+            padding: 3px 10px; border-radius: 4px; border: 1px solid transparent;
+        }
+        .home-card:hover .card-delete { opacity: 1; }
+        .home-card .card-delete:hover { background: #ffebee; border-color: #ef9a9a; }
+
+        /* Modal création projet */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4); display: flex; align-items: center;
+            justify-content: center; z-index: 1000;
+        }
+        .modal-overlay.hidden { display: none; }
+        .modal-box {
+            background: #fff; border-radius: 14px; padding: 32px 36px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2); min-width: 360px;
+            max-width: 460px;
+        }
+        .modal-box h2 { font-size: 1.15rem; color: #1565c0; margin-bottom: 20px; }
+        .modal-box .field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 16px; }
+        .modal-box label { font-size: 0.78rem; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.5px; }
+        .modal-box input { padding: 10px 14px; border: 1.5px solid #ccc; border-radius: 7px; font-size: 0.92rem; outline: none; }
+        .modal-box input:focus { border-color: #1565c0; }
+        .modal-box .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; }
+        .modal-box .modal-actions button {
+            padding: 9px 22px; border-radius: 7px; border: 1.5px solid #ccc;
+            background: #fff; color: #333; cursor: pointer; font-size: 0.88rem; font-weight: 700;
+        }
+        .modal-box .modal-actions button:hover { background: #f0f0f0; }
+        .modal-box .modal-actions button.primary { background: #1565c0; color: #fff; border-color: #1565c0; }
+        .modal-box .modal-actions button.primary:hover { background: #0d47a1; }
+
+        /* ====== APP PRINCIPALE (inchangée visuellement) ====== */
+        .app-container { display: none; flex-direction: column; flex: 1; overflow: hidden; }
+        .app-container.active { display: flex; }
+
         .main-tabs { display: flex; background: #333; flex-shrink: 0; z-index: 200; }
         .main-tab {
             padding: 10px 28px; cursor: pointer; font-size: 0.85rem; font-weight: 700;
@@ -23,6 +101,8 @@
         }
         .main-tab:hover { background: #555; color: #fff; }
         .main-tab.active { background: #fff; color: #1565c0; }
+        .main-tab.home-btn { background: #555; color: #ffc107; }
+        .main-tab.home-btn:hover { background: #666; color: #fff; }
         .page { display: none; flex-direction: column; flex: 1; overflow: hidden; }
         .page.active { display: flex; }
         .header {
@@ -180,7 +260,6 @@
         .param-sub-tab.active { color: #1565c0; border-bottom-color: #1565c0; }
         .param-sub-content { display: none; }
         .param-sub-content.active { display: block; }
-        /* 🔥 FIREBASE : indicateur de sauvegarde */
         .save-indicator {
             position: fixed; bottom: 20px; right: 20px;
             padding: 10px 20px; border-radius: 8px; font-size: 0.82rem;
@@ -194,81 +273,107 @@
     </style>
 </head>
 <body>
-    <div class="main-tabs">
-        <button class="main-tab active" onclick="switchPage('attribution')">🏗 Attribution Chantiers</button>
-        <button class="main-tab" onclick="switchPage('parametrage')">⚙ Paramétrage Attribution</button>
+
+    <!-- ====== PAGE D'ACCUEIL : SÉLECTION DU PROJET ====== -->
+    <div class="home-page" id="homePage">
+        <div class="home-title">🏗 Attribution Chantiers</div>
+        <div class="home-subtitle">Sélectionnez un chantier ou créez-en un nouveau</div>
+        <div class="home-grid" id="homeGrid"></div>
     </div>
 
-    <div class="page active" id="page-attribution">
-        <div class="header"><h1>🏗 Attribution Chantiers — Compagnons</h1></div>
-        <div class="chantier-ribbon" id="chantierRibbon"></div>
-        <div class="active-bar">
-            <span>Chantier actif : <span class="current" id="activeChantierLabel">Aucun</span></span>
-            <span class="hint">Clic = attribuer · Maintenir = peindre · Clic droit = effacer</span>
-        </div>
-        <div class="controls">
-            <button onclick="addCompagnon()">+ Compagnon</button>
-            <button onclick="removeLastCompagnon()">− Supprimer dernier</button>
-            <button onclick="sortCompagnons()">🔤 Trier A→Z</button>
-            <button class="fill-mode" id="fillBtn" onclick="toggleFillMode()">➡ Remplir jusqu'à nouvel ordre</button>
-            <button onclick="clearAllAttrib()">🗑 Tout effacer</button>
-            <button onclick="saveAsFileAttrib()">💾 Enregistrer sous</button>
-            <button onclick="loadFromFileAttrib()">📂 Ouvrir un fichier</button>
-            <div class="month-nav">
-                <button onclick="scrollToMonthA(-1)">◀</button>
-                <span class="month-label" id="monthLabelA"></span>
-                <button onclick="scrollToMonthA(1)">▶</button>
-                <button onclick="scrollToTodayA()" style="margin-left:8px;">📍 Aujourd'hui</button>
+    <!-- ====== MODAL CRÉATION PROJET ====== -->
+    <div class="modal-overlay hidden" id="modalNewProject">
+        <div class="modal-box">
+            <h2>➕ Nouveau chantier</h2>
+            <div class="field">
+                <label>Nom du chantier</label>
+                <input type="text" id="newProjectName" placeholder="Ex: OPEN SOURCE">
             </div>
-        </div>
-        <div class="table-wrapper" id="tableWrapperA">
-            <table id="attribTable">
-                <thead id="attribHead"></thead>
-                <tbody id="attribBody"></tbody>
-            </table>
+            <div class="modal-actions">
+                <button onclick="closeNewProjectModal()">Annuler</button>
+                <button class="primary" onclick="confirmNewProject()">Créer</button>
+            </div>
         </div>
     </div>
 
-    <div class="page" id="page-parametrage">
-        <div class="param-page">
-            <div class="param-sub-tabs">
-                <button class="param-sub-tab active" onclick="showParamSubA('chantiers')">Gestion des chantiers</button>
-                <button class="param-sub-tab" onclick="showParamSubA('dates')">Paramétrage des dates</button>
+    <!-- ====== APPLICATION PRINCIPALE ====== -->
+    <div class="app-container" id="appContainer">
+        <div class="main-tabs">
+            <button class="main-tab home-btn" onclick="goHome()">🏠 Accueil</button>
+            <button class="main-tab active" onclick="switchPage('attribution')">🏗 Attribution Chantiers</button>
+            <button class="main-tab" onclick="switchPage('parametrage')">⚙ Paramétrage Attribution</button>
+        </div>
+
+        <div class="page active" id="page-attribution">
+            <div class="header"><h1 id="headerTitle">🏗 Attribution Chantiers — Compagnons</h1></div>
+            <div class="chantier-ribbon" id="chantierRibbon"></div>
+            <div class="active-bar">
+                <span>Chantier actif : <span class="current" id="activeChantierLabel">Aucun</span></span>
+                <span class="hint">Clic = attribuer · Maintenir = peindre · Clic droit = effacer</span>
             </div>
-            <div class="param-sub-content active" id="paramSubA-chantiers">
-                <h2>🏗 Gestion des chantiers</h2>
-                <p class="info">Ajoutez vos chantiers. Ils apparaîtront comme boutons dans l'onglet Attribution.</p>
-                <div class="add-chantier-form">
-                    <div class="field"><label>Nom complet</label><input type="text" id="newChName" placeholder="Ex: OPEN SOURCE" style="width:220px;"></div>
-                    <div class="field"><label>Abréviation</label><input type="text" id="newChAbbr" placeholder="Ex: OPEN" style="width:120px;" maxlength="8"></div>
-                    <div class="field"><label>Couleur</label><input type="color" id="newChColor" value="#1565c0"></div>
-                    <button onclick="addChantier()">+ Ajouter</button>
+            <div class="controls">
+                <button onclick="addCompagnon()">+ Compagnon</button>
+                <button onclick="removeLastCompagnon()">− Supprimer dernier</button>
+                <button onclick="sortCompagnons()">🔤 Trier A→Z</button>
+                <button class="fill-mode" id="fillBtn" onclick="toggleFillMode()">➡ Remplir jusqu'à nouvel ordre</button>
+                <button onclick="clearAllAttrib()">🗑 Tout effacer</button>
+                <button onclick="saveAsFileAttrib()">💾 Enregistrer sous</button>
+                <button onclick="loadFromFileAttrib()">📂 Ouvrir un fichier</button>
+                <div class="month-nav">
+                    <button onclick="scrollToMonthA(-1)">◀</button>
+                    <span class="month-label" id="monthLabelA"></span>
+                    <button onclick="scrollToMonthA(1)">▶</button>
+                    <button onclick="scrollToTodayA()" style="margin-left:8px;">📍 Aujourd'hui</button>
                 </div>
-                <h2 style="font-size:0.95rem;margin-top:8px;">Chantiers existants</h2>
-                <div class="chantier-list" id="chantierList"></div>
             </div>
-            <div class="param-sub-content" id="paramSubA-dates">
-                <h2>📅 Paramétrage des dates</h2>
-                <p class="info">Activez/désactivez des mois. Un mois avec des attributions ne peut pas être désactivé.</p>
-                <div id="paramDatesContentA"></div>
-                <div class="param-actions">
-                    <button onclick="enableAllMonthsA()">✅ Tout activer</button>
-                    <button onclick="disableAllMonthsA()">🚫 Tout désactiver</button>
+            <div class="table-wrapper" id="tableWrapperA">
+                <table id="attribTable">
+                    <thead id="attribHead"></thead>
+                    <tbody id="attribBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="page" id="page-parametrage">
+            <div class="param-page">
+                <div class="param-sub-tabs">
+                    <button class="param-sub-tab active" onclick="showParamSubA('chantiers')">Gestion des chantiers</button>
+                    <button class="param-sub-tab" onclick="showParamSubA('dates')">Paramétrage des dates</button>
                 </div>
-            </div>
-            <div class="param-actions" style="margin-top:30px;">
-                <button class="primary" onclick="switchPage('attribution')">← Retour</button>
+                <div class="param-sub-content active" id="paramSubA-chantiers">
+                    <h2>🏗 Gestion des chantiers</h2>
+                    <p class="info">Ajoutez vos chantiers. Ils apparaîtront comme boutons dans l'onglet Attribution.</p>
+                    <div class="add-chantier-form">
+                        <div class="field"><label>Nom complet</label><input type="text" id="newChName" placeholder="Ex: OPEN SOURCE" style="width:220px;"></div>
+                        <div class="field"><label>Abréviation</label><input type="text" id="newChAbbr" placeholder="Ex: OPEN" style="width:120px;" maxlength="8"></div>
+                        <div class="field"><label>Couleur</label><input type="color" id="newChColor" value="#1565c0"></div>
+                        <button onclick="addChantier()">+ Ajouter</button>
+                    </div>
+                    <h2 style="font-size:0.95rem;margin-top:8px;">Chantiers existants</h2>
+                    <div class="chantier-list" id="chantierList"></div>
+                </div>
+                <div class="param-sub-content" id="paramSubA-dates">
+                    <h2>📅 Paramétrage des dates</h2>
+                    <p class="info">Activez/désactivez des mois. Un mois avec des attributions ne peut pas être désactivé.</p>
+                    <div id="paramDatesContentA"></div>
+                    <div class="param-actions">
+                        <button onclick="enableAllMonthsA()">✅ Tout activer</button>
+                        <button onclick="disableAllMonthsA()">🚫 Tout désactiver</button>
+                    </div>
+                </div>
+                <div class="param-actions" style="margin-top:30px;">
+                    <button class="primary" onclick="switchPage('attribution')">← Retour</button>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="flash-msg" id="flashMsg"></div>
-    <!-- 🔥 FIREBASE : indicateur visuel -->
     <div class="save-indicator" id="saveIndicator"></div>
     <input type="file" id="fileInputA" accept=".json" style="display:none;">
 
     <script>
-        // 🔥 FIREBASE : configuration avec VOS clés
+        // ===== FIREBASE CONFIG =====
         const firebaseConfig = {
             apiKey: "AIzaSyDuGND3F_vuz-Y-aQbQ4JECIRYM54VyX6Q",
             authDomain: "planning-compagnons.firebaseapp.com",
@@ -280,9 +385,153 @@
         };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-        const DOC_ID = "attribution_principal";
 
-        // 🔥 FIREBASE : indicateur visuel
+        // ===== GESTION DES PROJETS (page d'accueil) =====
+        let projects = []; // { id, name, createdAt }
+        let currentProjectId = null;
+
+        function getProjectDocId() {
+            return 'project_' + currentProjectId;
+        }
+
+        // Charger la liste des projets depuis Firebase
+        function loadProjectsList() {
+            db.collection("projects_index").doc("list").get()
+                .then(doc => {
+                    if (doc.exists && doc.data().projects) {
+                        projects = doc.data().projects;
+                    } else {
+                        projects = [];
+                    }
+                    renderHome();
+                })
+                .catch(err => {
+                    console.error("Erreur chargement projets:", err);
+                    projects = [];
+                    renderHome();
+                });
+        }
+
+        // Sauvegarder la liste des projets
+        function saveProjectsList() {
+            db.collection("projects_index").doc("list").set({ projects: projects })
+                .catch(err => console.error("Erreur sauvegarde liste projets:", err));
+        }
+
+        // Afficher la page d'accueil
+        function renderHome() {
+            const grid = document.getElementById('homeGrid');
+            grid.innerHTML = '';
+
+            projects.forEach(proj => {
+                const card = document.createElement('div');
+                card.className = 'home-card';
+                card.innerHTML = `
+                    <div class="card-icon">🏗</div>
+                    <div class="card-name">${proj.name}</div>
+                    <div class="card-date">Créé le ${proj.createdAt || '—'}</div>
+                    <div class="card-delete" onclick="event.stopPropagation(); deleteProject('${proj.id}')">🗑 Supprimer</div>
+                `;
+                card.addEventListener('click', () => openProject(proj.id));
+                grid.appendChild(card);
+            });
+
+            // Bouton "Nouveau chantier"
+            const addCard = document.createElement('div');
+            addCard.className = 'home-card add-new';
+            addCard.innerHTML = `
+                <div class="card-icon">➕</div>
+                <div class="card-name">Nouveau chantier</div>
+            `;
+            addCard.addEventListener('click', () => openNewProjectModal());
+            grid.appendChild(addCard);
+        }
+
+        function openNewProjectModal() {
+            document.getElementById('newProjectName').value = '';
+            document.getElementById('modalNewProject').classList.remove('hidden');
+            document.getElementById('newProjectName').focus();
+        }
+
+        function closeNewProjectModal() {
+            document.getElementById('modalNewProject').classList.add('hidden');
+        }
+
+        function confirmNewProject() {
+            const name = document.getElementById('newProjectName').value.trim();
+            if (!name) { flash('⚠ Veuillez saisir un nom de chantier'); return; }
+
+            const id = 'proj_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+            const now = new Date();
+            const createdAt = String(now.getDate()).padStart(2,'0') + '/' + String(now.getMonth()+1).padStart(2,'0') + '/' + now.getFullYear();
+
+            projects.push({ id, name, createdAt });
+            saveProjectsList();
+            closeNewProjectModal();
+            openProject(id);
+        }
+
+        function deleteProject(projId) {
+            const proj = projects.find(p => p.id === projId);
+            if (!proj) return;
+            if (!confirm('Supprimer le chantier "' + proj.name + '" et toutes ses données ?')) return;
+
+            projects = projects.filter(p => p.id !== projId);
+            saveProjectsList();
+
+            // Supprimer le document Firebase du projet
+            db.collection("attributions").doc('project_' + projId).delete()
+                .then(() => console.log("Document projet supprimé"))
+                .catch(err => console.error("Erreur suppression:", err));
+
+            renderHome();
+        }
+
+        function openProject(projId) {
+            currentProjectId = projId;
+            const proj = projects.find(p => p.id === projId);
+
+            // Réinitialiser toutes les données du projet
+            chantiers = [];
+            enabledMonthsA = {};
+            compagnons = [];
+            attribData = {};
+            activeChantier = null;
+            compIdCounter = 0;
+            fillMode = false;
+            colWidths = { nom: 120, prenom: 100, id: 60, entite: 70 };
+
+            // Afficher l'app
+            document.getElementById('homePage').classList.add('hidden');
+            document.getElementById('appContainer').classList.add('active');
+
+            // Mettre à jour le titre
+            document.getElementById('headerTitle').textContent = '🏗 ' + (proj ? proj.name : 'Chantier') + ' — Compagnons';
+
+            // Initialiser les mois et charger les données Firebase du projet
+            initMonthsA();
+            generateWorkingDaysA();
+            rebuildAttribTable();
+            renderChantierRibbon();
+            document.getElementById('newChColor').value = randomColor();
+
+            firebaseLoadProject();
+        }
+
+        function goHome() {
+            // Sauvegarder le projet en cours avant de quitter
+            if (currentProjectId) {
+                autoSaveNow();
+            }
+            currentProjectId = null;
+
+            document.getElementById('appContainer').classList.remove('active');
+            document.getElementById('homePage').classList.remove('hidden');
+
+            loadProjectsList();
+        }
+
+        // ===== FIREBASE SAVE/LOAD PAR PROJET =====
         function showSaveStatus(status) {
             const el = document.getElementById('saveIndicator');
             el.className = 'save-indicator';
@@ -291,20 +540,24 @@
             else if (status === 'error') { el.textContent = '❌ Erreur sauvegarde'; el.classList.add('error'); setTimeout(() => { el.className = 'save-indicator hidden'; }, 4000); }
         }
 
-        // 🔥 FIREBASE : sauvegarde automatique (2s après dernière modif)
         let firebaseSaveTimeout = null;
         function autoSave() {
+            if (!currentProjectId) return;
             clearTimeout(firebaseSaveTimeout);
             firebaseSaveTimeout = setTimeout(() => {
-                showSaveStatus('saving');
-                const data = gatherAllData();
-                db.collection("attributions").doc(DOC_ID).set(data)
-                    .then(() => { showSaveStatus('saved'); console.log("✅ Sauvegardé Firebase"); })
-                    .catch(err => { showSaveStatus('error'); console.error("❌ Erreur:", err); });
+                autoSaveNow();
             }, 2000);
         }
 
-        // 🔥 FIREBASE : rassembler toutes les données
+        function autoSaveNow() {
+            if (!currentProjectId) return;
+            showSaveStatus('saving');
+            const data = gatherAllData();
+            db.collection("attributions").doc(getProjectDocId()).set(data)
+                .then(() => { showSaveStatus('saved'); })
+                .catch(err => { showSaveStatus('error'); console.error("Erreur:", err); });
+        }
+
         function gatherAllData() {
             return {
                 chantiers: chantiers,
@@ -313,31 +566,42 @@
                 attribData: attribData,
                 compIdCounter: compIdCounter,
                 colWidths: colWidths,
-                version: 'attrib_v3_firebase'
+                version: 'attrib_v4_multiproject'
             };
         }
 
-        // 🔥 FIREBASE : chargement au démarrage
-        function firebaseLoad() {
-            db.collection("attributions").doc(DOC_ID).get()
+        function firebaseLoadProject() {
+            if (!currentProjectId) return;
+            db.collection("attributions").doc(getProjectDocId()).get()
                 .then(doc => {
-                    if (!doc.exists) { console.log("Aucune donnée Firebase."); return; }
+                    if (!doc.exists) {
+                        // Nouveau projet : créer 5 compagnons vides
+                        for (let i = 0; i < 5; i++) {
+                            compIdCounter++;
+                            compagnons.push({ id: compIdCounter, nom: '', prenom: '', matricule: '', entite: 'ECE' });
+                        }
+                        rebuildAttribTable();
+                        renderChantierRibbon();
+                        autoSave();
+                        setTimeout(scrollToTodayA, 500);
+                        return;
+                    }
                     const data = doc.data();
                     if (data.chantiers) chantiers = data.chantiers;
-                    if (data.enabledMonths) { enabledMonthsA = data.enabledMonths; }
+                    if (data.enabledMonths) enabledMonthsA = data.enabledMonths;
                     if (data.compagnons) compagnons = data.compagnons;
                     if (data.attribData) attribData = data.attribData;
                     if (data.compIdCounter) compIdCounter = data.compIdCounter;
                     if (data.colWidths) colWidths = data.colWidths;
                     rebuildAttribTable();
                     renderChantierRibbon();
-                    console.log("✅ Données chargées depuis Firebase");
                     showSaveStatus('saved');
+                    setTimeout(scrollToTodayA, 500);
                 })
-                .catch(err => { console.error("❌ Erreur chargement:", err); showSaveStatus('error'); });
+                .catch(err => { console.error("Erreur chargement:", err); showSaveStatus('error'); });
         }
-        // 🔥 FIN CONFIG FIREBASE
 
+        // ===== UTILITAIRES =====
         function toLocalDateStr(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
         function getWeekNumber(d){const t=new Date(d.getFullYear(),d.getMonth(),d.getDate());t.setDate(t.getDate()+3-(t.getDay()+6)%7);const w1=new Date(t.getFullYear(),0,4);return 1+Math.round(((t-w1)/86400000-3+(w1.getDay()+6)%7)/7);}
         const DAYS_FR=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
@@ -383,9 +647,9 @@
         function isLastDayOfMonthA(idx){if(idx>=workingDays.length-1)return true;return workingDays[idx].month!==workingDays[idx+1].month||workingDays[idx].year!==workingDays[idx+1].year;}
         function isLastDayOfWeekA(idx){if(idx>=workingDays.length-1)return true;return workingDays[idx].week!==workingDays[idx+1].week;}
 
-        function addCompagnon(){compIdCounter++;compagnons.push({id:compIdCounter,nom:'',prenom:'',matricule:'',entite:'ECE'});rebuildAttribTable();autoSave();} // 🔥
-        function removeLastCompagnon(){if(!compagnons.length)return;const last=compagnons.pop();for(const k of Object.keys(attribData)){if(k.startsWith(last.id+'_'))delete attribData[k];}rebuildAttribTable();autoSave();} // 🔥
-        function sortCompagnons(){compagnons.sort((a,b)=>{const na=(a.nom||'').toUpperCase(),nb=(b.nom||'').toUpperCase();if(na<nb)return-1;if(na>nb)return 1;const pa=(a.prenom||'').toUpperCase(),pb=(b.prenom||'').toUpperCase();if(pa<pb)return-1;if(pa>pb)return 1;return 0;});rebuildAttribTable();autoSave();} // 🔥
+        function addCompagnon(){compIdCounter++;compagnons.push({id:compIdCounter,nom:'',prenom:'',matricule:'',entite:'ECE'});rebuildAttribTable();autoSave();}
+        function removeLastCompagnon(){if(!compagnons.length)return;const last=compagnons.pop();for(const k of Object.keys(attribData)){if(k.startsWith(last.id+'_'))delete attribData[k];}rebuildAttribTable();autoSave();}
+        function sortCompagnons(){compagnons.sort((a,b)=>{const na=(a.nom||'').toUpperCase(),nb=(b.nom||'').toUpperCase();if(na<nb)return-1;if(na>nb)return 1;const pa=(a.prenom||'').toUpperCase(),pb=(b.prenom||'').toUpperCase();if(pa<pb)return-1;if(pa>pb)return 1;return 0;});rebuildAttribTable();autoSave();}
 
         function toggleFillMode(){fillMode=!fillMode;document.getElementById('fillBtn').classList.toggle('active',fillMode);}
 
@@ -466,12 +730,12 @@
                         let val=inp.value;
                         if(col.transform==='capitalize'){val=capitalizeFirst(val);inp.value=val;}
                         comp[col.field]=val;
-                        autoSave(); // 🔥
+                        autoSave();
                     });
                     inp.addEventListener('blur',()=>{
                         if(col.transform==='upper')comp[col.field]=inp.value.toUpperCase();
                         if(col.transform==='capitalize'){inp.value=capitalizeFirst(inp.value);comp[col.field]=inp.value;}
-                        autoSave(); // 🔥
+                        autoSave();
                     });
                     td.appendChild(inp);tr.appendChild(td);
                 });
@@ -492,7 +756,7 @@
                         else{isPainting=true;applyChantier(td,comp.id,wd.key);}
                     });
                     td.addEventListener('mouseenter',()=>{if(!isPainting||!activeChantier||fillMode)return;applyChantier(td,comp.id,wd.key);});
-                    td.addEventListener('contextmenu',(e)=>{e.preventDefault();attribData[comp.id+'_'+wd.key]=null;renderCell(td,comp.id,wd.key);autoSave();}); // 🔥
+                    td.addEventListener('contextmenu',(e)=>{e.preventDefault();attribData[comp.id+'_'+wd.key]=null;renderCell(td,comp.id,wd.key);autoSave();});
                     tr.appendChild(td);
                 });
                 tbody.appendChild(tr);
@@ -508,20 +772,20 @@
             const chId=activeChantier;
             for(let i=startColIdx;i<workingDays.length;i++){attribData[compId+'_'+workingDays[i].key]=chId;}
             document.querySelectorAll(`td.data-cell[data-comp="${compId}"]`).forEach(td=>{renderCell(td,compId,td.getAttribute('data-date'));});
-            autoSave(); // 🔥
+            autoSave();
         }
 
         function clearFrom(compId,dateKey,e){
             attribData[compId+'_'+dateKey]=null;
             const td=e.target.closest('td.data-cell');
             if(td)renderCell(td,compId,dateKey);
-            autoSave(); // 🔥
+            autoSave();
         }
 
         function applyChantier(td,compId,dateKey){
             attribData[compId+'_'+dateKey]=activeChantier==='__ERASE__'?null:activeChantier;
             renderCell(td,compId,dateKey);
-            autoSave(); // 🔥
+            autoSave();
         }
 
         function renderCell(td,compId,dateKey){
@@ -555,9 +819,9 @@
             if(chantiers.some(c=>c.abbr===abbr)){flash('⚠ Abréviation déjà existante');return;}
             chantiers.push({id:'ch_'+Date.now()+'_'+Math.random().toString(36).substr(2,4),name,abbr,color});
             nameEl.value='';abbrEl.value='';colorEl.value=randomColor();
-            saveChantiers();renderChantierList();renderChantierRibbon();autoSave(); // 🔥
+            renderChantierList();renderChantierRibbon();autoSave();
         }
-        function removeChantier(id){if(isChantierUsed(id)){flash('⚠ Impossible : chantier attribué');return;}chantiers=chantiers.filter(c=>c.id!==id);if(activeChantier===id)activeChantier=null;saveChantiers();renderChantierList();renderChantierRibbon();autoSave();} // 🔥
+        function removeChantier(id){if(isChantierUsed(id)){flash('⚠ Impossible : chantier attribué');return;}chantiers=chantiers.filter(c=>c.id!==id);if(activeChantier===id)activeChantier=null;renderChantierList();renderChantierRibbon();autoSave();}
         function renderChantierList(){
             const el=document.getElementById('chantierList');el.innerHTML='';
             if(!chantiers.length){el.innerHTML='<span style="color:#999;font-style:italic;">Aucun chantier</span>';return;}
@@ -571,10 +835,6 @@
             });
         }
         function randomColor(){return['#1565c0','#2e7d32','#c62828','#ef6c00','#6a1b9a','#00838f','#ad1457','#4e342e','#37474f','#ff6f00','#1b5e20','#4a148c','#880e4f','#bf360c','#01579b','#33691e'][Math.floor(Math.random()*16)];}
-        function saveChantiers(){localStorage.setItem('attrib_chantiers',JSON.stringify(chantiers));}
-        function loadChantiers(){const r=localStorage.getItem('attrib_chantiers');if(r){try{chantiers=JSON.parse(r);}catch(e){}}}
-        function saveMonthsA(){localStorage.setItem('attrib_months',JSON.stringify(enabledMonthsA));}
-        function loadMonthsA(){const r=localStorage.getItem('attrib_months');if(r){try{const s=JSON.parse(r);for(const[k,v]of Object.entries(s))enabledMonthsA[k]=v;}catch(e){}}}
 
         function renderParamDatesA(){
             const c=document.getElementById('paramDatesContentA');c.innerHTML='';
@@ -582,17 +842,17 @@
                 const sec=document.createElement('div');sec.className='date-year-section';
                 const title=document.createElement('div');title.className='date-year-title';title.textContent=y;sec.appendChild(title);
                 const grid=document.createElement('div');grid.className='date-months-grid';
-                for(let m=0;m<12;m++){const key=monthKey(y,m);const btn=document.createElement('div');btn.className='date-month-btn';btn.textContent=MONTHS_SHORT[m];btn.classList.add(enabledMonthsA[key]?'enabled':'disabled');btn.addEventListener('click',()=>{if(enabledMonthsA[key]){if(isMonthHasAttribData(y,m)){flash('⚠ Impossible : des attributions existent sur '+MONTHS_FR[m]+' '+y);return;}enabledMonthsA[key]=false;}else{enabledMonthsA[key]=true;}saveMonthsA();renderParamDatesA();autoSave();}); // 🔥
+                for(let m=0;m<12;m++){const key=monthKey(y,m);const btn=document.createElement('div');btn.className='date-month-btn';btn.textContent=MONTHS_SHORT[m];btn.classList.add(enabledMonthsA[key]?'enabled':'disabled');btn.addEventListener('click',()=>{if(enabledMonthsA[key]){if(isMonthHasAttribData(y,m)){flash('⚠ Impossible : des attributions existent sur '+MONTHS_FR[m]+' '+y);return;}enabledMonthsA[key]=false;}else{enabledMonthsA[key]=true;}renderParamDatesA();autoSave();});
                 grid.appendChild(btn);}
                 sec.appendChild(grid);c.appendChild(sec);
             }
         }
-        function enableAllMonthsA(){for(const k of Object.keys(enabledMonthsA))enabledMonthsA[k]=true;saveMonthsA();renderParamDatesA();autoSave();} // 🔥
-        function disableAllMonthsA(){let bl=[];for(let y=GLOBAL_START_YEAR;y<=GLOBAL_END_YEAR;y++){for(let m=0;m<12;m++){const key=monthKey(y,m);if(!enabledMonthsA[key])continue;if(isMonthHasAttribData(y,m)){bl.push(MONTHS_SHORT[m]+' '+y);continue;}enabledMonthsA[key]=false;}}saveMonthsA();renderParamDatesA();autoSave();if(bl.length)flash('⚠ Non désactivés : '+bl.join(', '));} // 🔥
+        function enableAllMonthsA(){for(const k of Object.keys(enabledMonthsA))enabledMonthsA[k]=true;renderParamDatesA();autoSave();}
+        function disableAllMonthsA(){let bl=[];for(let y=GLOBAL_START_YEAR;y<=GLOBAL_END_YEAR;y++){for(let m=0;m<12;m++){const key=monthKey(y,m);if(!enabledMonthsA[key])continue;if(isMonthHasAttribData(y,m)){bl.push(MONTHS_SHORT[m]+' '+y);continue;}enabledMonthsA[key]=false;}}renderParamDatesA();autoSave();if(bl.length)flash('⚠ Non désactivés : '+bl.join(', '));}
 
         function switchPage(name){
             document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-            document.querySelectorAll('.main-tab').forEach(t=>t.classList.remove('active'));
+            document.querySelectorAll('.main-tab:not(.home-btn)').forEach(t=>t.classList.remove('active'));
             document.getElementById('page-'+name).classList.add('active');
             document.querySelector(`.main-tab[onclick*="${name}"]`).classList.add('active');
             if(name==='attribution'){rebuildAttribTable();renderChantierRibbon();}
@@ -606,13 +866,15 @@
             if(sub==='chantiers')renderChantierList();if(sub==='dates')renderParamDatesA();
         }
 
-        function clearAllAttrib(){if(!confirm('Effacer toutes les attributions ?'))return;attribData={};rebuildAttribTable();autoSave();} // 🔥
+        function clearAllAttrib(){if(!confirm('Effacer toutes les attributions ?'))return;attribData={};rebuildAttribTable();autoSave();}
 
         function saveAsFileAttrib(){
-            const data=gatherAllData(); // 🔥 réutilise la même fonction
+            const data=gatherAllData();
             const json=JSON.stringify(data,null,2);const blob=new Blob([json],{type:'application/json'});
             const now=new Date();const link=document.createElement('a');link.href=URL.createObjectURL(blob);
-            link.download='attribution_'+now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+'_'+String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0')+'.json';
+            const proj=projects.find(p=>p.id===currentProjectId);
+            const projName=proj?proj.name.replace(/[^a-zA-Z0-9]/g,'_'):'export';
+            link.download=projName+'_'+now.getFullYear()+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0')+'_'+String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0')+'.json';
             document.body.appendChild(link);link.click();document.body.removeChild(link);URL.revokeObjectURL(link.href);
         }
         function loadFromFileAttrib(){document.getElementById('fileInputA').click();}
@@ -623,12 +885,12 @@
                 try{
                     const data=JSON.parse(ev.target.result);
                     if(data.chantiers)chantiers=data.chantiers;
-                    if(data.enabledMonths){enabledMonthsA=data.enabledMonths;saveMonthsA();}
+                    if(data.enabledMonths)enabledMonthsA=data.enabledMonths;
                     if(data.compagnons)compagnons=data.compagnons;
                     if(data.attribData)attribData=data.attribData;
                     if(data.compIdCounter)compIdCounter=data.compIdCounter;
                     if(data.colWidths)colWidths=data.colWidths;
-                    saveChantiers();rebuildAttribTable();renderChantierRibbon();autoSave();flash('✅ Fichier chargé !'); // 🔥
+                    rebuildAttribTable();renderChantierRibbon();autoSave();flash('✅ Fichier chargé !');
                 }catch(err){flash('⚠ Erreur : '+err.message);}
             };
             reader.readAsText(file);e.target.value='';
@@ -637,17 +899,17 @@
         function scrollToMonthA(dir){currentMonthIndexA=Math.max(0,Math.min(monthBoundaries.length-1,currentMonthIndexA+dir));const mb=monthBoundaries[currentMonthIndexA];if(!mb)return;document.getElementById('monthLabelA').textContent=MONTHS_FR[mb.month]+' '+mb.year;const wrapper=document.getElementById('tableWrapperA');const target=wrapper.querySelector(`td.data-cell[data-date="${workingDays[mb.startIndex].key}"]`);if(target)wrapper.scrollLeft=target.offsetLeft-getTotalInfoWidth()-20;}
         function scrollToTodayA(){const todayKey=toLocalDateStr(new Date());const wrapper=document.getElementById('tableWrapperA');const target=wrapper.querySelector(`td.data-cell[data-date="${todayKey}"]`);if(target){wrapper.scrollLeft=target.offsetLeft-getTotalInfoWidth()-100;const today=new Date();monthBoundaries.forEach((mb,idx)=>{if(mb.month===today.getMonth()&&mb.year===today.getFullYear()){currentMonthIndexA=idx;document.getElementById('monthLabelA').textContent=MONTHS_FR[mb.month]+' '+mb.year;}});}else{flash("⚠ Aujourd'hui n'est pas un jour ouvré.");}}
 
-        function init(){
-            initMonthsA();loadMonthsA();loadChantiers();
-            if(!compagnons.length){for(let i=0;i<5;i++){compIdCounter++;compagnons.push({id:compIdCounter,nom:'',prenom:'',matricule:'',entite:'ECE'});}}
-            document.getElementById('newChColor').value=randomColor();
-            generateWorkingDaysA();rebuildAttribTable();renderChantierRibbon();
-            const now=new Date();monthBoundaries.forEach((mb,idx)=>{if(mb.month===now.getMonth()&&mb.year===now.getFullYear())currentMonthIndexA=idx;});
-            if(monthBoundaries.length){if(currentMonthIndexA>=monthBoundaries.length)currentMonthIndexA=0;document.getElementById('monthLabelA').textContent=MONTHS_FR[monthBoundaries[currentMonthIndexA].month]+' '+monthBoundaries[currentMonthIndexA].year;}
-            // 🔥 FIREBASE : charger les données depuis Firebase (écrase le localStorage)
-            firebaseLoad();
-            setTimeout(scrollToTodayA,500);
+        // ===== INITIALISATION =====
+        function init() {
+            // Charger la liste des projets et afficher la page d'accueil
+            loadProjectsList();
         }
+
+        // Écouter Enter dans le modal
+        document.getElementById('newProjectName').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') confirmNewProject();
+        });
+
         init();
     </script>
 </body>
