@@ -297,7 +297,14 @@
             <b>Viewer</b> : peut consulter les chantiers autorisés (lecture seule)<br><br>
             Les modifications sont sauvegardées automatiquement. Seuls les emails ayant un compte Firebase Authentication apparaissent.
         </div>
-        <div class="admin-user-list" id="adminUserList"></div>
+        <div style="display:flex;gap:8px;margin-bottom:20px;align-items:flex-end;">
+    <div style="display:flex;flex-direction:column;gap:4px;">
+        <label style="font-size:0.75rem;font-weight:700;color:#555;text-transform:uppercase;">Ajouter un utilisateur</label>
+        <input type="email" id="adminNewEmail" placeholder="prenom.nom@eiffage.com" style="padding:8px 12px;border:1.5px solid #ccc;border-radius:6px;font-size:0.88rem;width:300px;outline:none;">
+    </div>
+    <button onclick="adminAddUser()" style="padding:8px 18px;border:none;border-radius:6px;background:#c62828;color:#fff;font-weight:700;cursor:pointer;font-size:0.85rem;">+ Ajouter</button>
+</div>
+<div class="admin-user-list" id="adminUserList"></div>
     </div>
 
     <div class="home-page hidden" id="homePage">
@@ -484,7 +491,16 @@
         document.getElementById('adminPage').classList.remove('visible');
         document.getElementById('homePage').classList.remove('hidden');
     }
-
+    function adminAddUser(){
+    const email=document.getElementById('adminNewEmail').value.trim().toLowerCase();
+    if(!email||!email.includes('@')){flashBlock('⚠ Email invalide');return;}
+    if(userRolesData[email]){flashBlock('⚠ Utilisateur déjà existant');return;}
+    userRolesData[email]={role:'viewer',chantiers:[]};
+    saveUserRoles().then(()=>{
+        document.getElementById('adminNewEmail').value='';
+        renderAdminPanel();
+    });
+}
     function renderAdminPanel(){
         const list=document.getElementById('adminUserList');
         list.innerHTML='';
@@ -544,6 +560,19 @@
                 allSpan.textContent='Accès total (admin)';
                 card.appendChild(allSpan);
             }
+// Bouton supprimer (sauf soi-même)
+if(email!==currentUserEmail){
+    const delBtn=document.createElement('button');
+    delBtn.textContent='🗑';
+    delBtn.style.cssText='padding:4px 10px;border:1px solid #e0e0e0;border-radius:4px;background:#fff;color:#c62828;cursor:pointer;font-size:0.75rem;margin-left:auto;';
+    delBtn.title='Retirer cet utilisateur';
+    delBtn.addEventListener('click',()=>{
+        if(!confirm('Retirer '+email+' de la liste ?'))return;
+        delete userRolesData[email];
+        saveUserRoles().then(()=>renderAdminPanel());
+    });
+    card.appendChild(delBtn);
+}
             list.appendChild(card);
         });
     }
